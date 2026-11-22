@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>THEOREM / Which kick reveals the hidden link?</title>
+<style>
+:root{color-scheme:dark;--bg:#080d13;--panel:#101923;--border:#273847;--ink:#e9eff2;--muted:#98aeba;--cyan:#7be0d3;--pink:#ff9b8a}
+*{box-sizing:border-box}body{margin:0;font:15px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);background:radial-gradient(circle at 50% -20%,#1b3040,transparent 60%),var(--bg)}main{max-width:1160px;margin:auto;padding:38px 24px 56px}
+small,nav,.eyebrow{letter-spacing:.12em;text-transform:uppercase;color:var(--cyan);font-size:11px;font-weight:700}
+h1{font-size:clamp(31px,4.5vw,58px);line-height:1.08;letter-spacing:-.055em;max-width:800px;margin:13px 0 18px}h1 em{color:var(--cyan);font-style:normal}
+p{color:var(--muted);max-width:830px;margin:8px 0 20px}.intro{font-size:17px}
+.controls,.panel,.meter,.result{border:1px solid var(--border);background:var(--panel);border-radius:16px}
+.controls{padding:20px;margin:26px 0}.buttons{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:18px}
+button{font:inherit;font-size:13px;border:1px solid #42586b;border-radius:10px;background:#1b2d3b;color:var(--ink);padding:9px 15px;cursor:pointer}
+button.active{border-color:var(--cyan);color:var(--cyan);background:#153a3c}button:hover{border-color:#7be0d3}
+.sliders{display:grid;grid-template-columns:1fr 1fr;gap:20px}label{display:flex;justify-content:space-between;color:#bfccd4;font-size:13px;margin-bottom:8px}
+input[type=range]{accent-color:var(--cyan);width:100%;cursor:pointer}.frames{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
+.panel{padding:17px;min-width:0}.panel b{font-size:14px;display:block;margin-bottom:3px}.panel p{font-size:12px;margin:0 0 12px;min-height:36px}
+canvas.image{display:block;image-rendering:pixelated;width:100%;aspect-ratio:1;background:#15212b;border-radius:8px}
+.result{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:16px 0;padding:17px}
+.metric b{font-size:clamp(21px,3vw,36px);display:block;font-variant-numeric:tabular-nums;color:var(--cyan);line-height:1.4}
+.metric span{font-size:12px;color:var(--muted)}
+.meter{padding:17px 20px;margin-bottom:18px}#spectrum{width:100%;height:110px;display:block}
+.note{border-left:3px solid var(--pink);padding:6px 0 6px 18px;margin:28px 0 15px;max-width:850px}
+.note p{margin:0 0 6px}a{color:var(--cyan);text-decoration-color:#517d82}
+footer{color:var(--muted);font-size:12px;border-top:1px solid var(--border);padding-top:22px;margin-top:36px}
+@media(max-width:690px){.frames{grid-template-columns:1fr}.sliders,.result{grid-template-columns:1fr 1fr}.panel p{min-height:0}.panel canvas.image{max-width:370px}.metric b{font-size:23px}}
+</style></head><body><main>
+<nav>THEOREM · GATE 002 · LUOTAIN2 WORMHOLE</nav>
+<h1>Which disturbance exposes a <em>hidden connection?</em></h1>
+<p class="intro">Two different rules can process the same image and appear identical. The difference is not in their ordinary predictions. It's in <strong style="color:#e9eff2">which pattern you give them.</strong></p>
+<div class="controls">
+<div class="buttons">
+<button data-preset="dark" class="active">Exact dark pattern</button>
+<button data-preset="near">Nearly dark</button>
+<button data-preset="bright">Maximum reveal</button>
+<button data-preset="random">Another pattern</button>
+</div>
+<div class="sliders"><div>
+<label for="ky">Vertical frequency <output id="kyValue">9</output></label>
+<input id="ky" type="range" min="0" max="32" value="9" step="1">
+</div><div><label for="kx">Horizontal frequency <output id="kxValue">17</output></label>
+<input id="kx" type="range" min="0" max="32" value="17" step="1"></div></div>
+</div>
+<div class="frames">
+<div class="panel"><b>01 · Original spatial pattern</b><p>The signal entering the two competing rules.</p><canvas class="image" id="original" width="64" height="64"></canvas></div>
+<div class="panel"><b>02 · Shifted by the wormhole</b><p>The same signal sampled 17 rows and −9 columns away.</p><canvas class="image" id="shifted" width="64" height="64"></canvas></div>
+<div class="panel"><b>03 · Residue between rules</b><p>What the wormhole law reveals that the local-only law cannot explain.</p><canvas class="image" id="difference" width="64" height="64"></canvas></div>
+</div>
+<div class="result">
+<div class="metric"><b id="gain">0.0000</b><span>Relative difference · 0.1 × (shift − self)</span></div>
+<div class="metric"><b id="phase">0 / 64</b><span>Shift phase measured in cycle steps</span></div>
+<div class="metric"><b id="accuracy">50.0%</b><span>Best known-law choice with fixed noisy probe</span></div>
+</div>
+<div class="meter"><label>Explore horizontal frequencies with vertical frequency fixed</label><canvas id="spectrum" width="900" height="110"></canvas></div>
+<div class="note"><p><strong style="color:var(--pink)">Why this matters</strong></p>
+<p id="explanation">This pattern returns to the same value after the long shift. Two different operators therefore give identical outputs on it.</p></div>
+<p>Mathematically the difference is <code>0.1 × (shift(+17,−9) − identity)</code>. Its gain for a Fourier mode is <code>0.2 × |sin(π(17ky − 9kx)/64)|</code>. The mode indices form a lattice of 64 exactly dark and 64 maximally bright frequencies out of 4096. The original Luotain2 wormhole uses this offset, but the local-only competitor shown here is a declared test hypothesis—not a recovered blind-IV law.</p>
+<p>This browser page is a deterministic visualization of <a href="https://github.com/anttiluode/Theorem/blob/main/wormhole_gate.py">the numerical experiment</a>. It does not analyze EEG, recover unknown physics, or prove any new Fourier mathematics. <a href="https://github.com/anttiluode/shadowvalley">ShadowValley</a> supplies the companion constraint-read example.</p>
+<footer>Built for Theorem. No libraries, no network, no uploads. Source geometry: anttiluode/Luotain2 → make_world("wormhole").</footer>
+</main>
+<script>
+(function(){
+"use strict";
+var N=64,dy=17,dx=-9;
+var ky=document.getElementById("ky"),kx=document.getElementById("kx");
+var cvIds=["original","shifted","difference"], canvases=cvIds.map(function(id){return document.getElementById(id)});
+var presets={dark:[9,17],near:[1,2],bright:[0,32]};
+function erf(x){var s=x<0?-1:1;x=Math.abs(x);var t=1/(1+.3275911*x);var y=1-(((((1.061405429*t-1.453152027)*t)+1.421413741)*t-.284496736)*t+.254829592)*t*Math.exp(-x*x);return s*y}
+function modeGain(y,x){return .2*Math.abs(Math.sin(Math.PI*(17*y-9*x)/64))}
+function color(z){var val=Math.max(-1,Math.min(1,z));if(val>=0)return [Math.round(23+222*val),Math.round(36+103*val),Math.round(48+58*val),255];return [Math.round(23-9*val),Math.round(36-92*val),Math.round(48-151*val),255]}
+function paint(canvas,values,range){var ctx=canvas.getContext("2d"),data=ctx.createImageData(N,N);for(var i=0;i<N*N;i++){var c=color(values[i]/range);for(var j=0;j<4;j++)data.data[i*4+j]=c[j]}ctx.putImageData(data,0,0)}
+function drawSpectrum(y,x){var canvas=document.getElementById("spectrum"),c=canvas.getContext("2d"),w=canvas.width,h=canvas.height;c.clearRect(0,0,w,h);c.fillStyle="#0c141d";c.fillRect(0,0,w,h);c.strokeStyle="#294252";c.beginPath();c.moveTo(16,h-15);c.lineTo(w-12,h-15);c.stroke();c.strokeStyle="#7be0d3";c.lineWidth=2;c.beginPath();for(var j=0;j<=32;j++){var xx=16+j/32*(w-28),yy=h-15-modeGain(y,j)/.2*(h-33);if(!j)c.moveTo(xx,yy);else c.lineTo(xx,yy)}c.stroke();var mx=16+x/32*(w-28),my=h-15-modeGain(y,x)/.2*(h-33);c.beginPath();c.arc(mx,my,6,0,Math.PI*2);c.fillStyle="#ff9b8a";c.fill()}
+function setPreset(name){var p=presets[name];if(name==="random")p=[Math.floor(Math.random()*33),Math.floor(Math.random()*33)];ky.value=p[0];kx.value=p[1];render()}
+function render(){var y=+ky.value,x=+kx.value;document.getElementById("kyValue").textContent=y;document.getElementById("kxValue").textContent=x;var orig=[],move=[],diff=[],energy=0,diffenergy=0;for(var row=0;row<N;row++)for(var col=0;col<N;col++){var a=2*Math.PI*(y*row+x*col)/N;var b=2*Math.PI*(y*(row-dy)+x*(col-dx))/N;var f=Math.cos(a),sh=Math.cos(b),res=.1*(sh-f);orig.push(f);move.push(sh);diff.push(res);energy+=f*f;diffenergy+=res*res}
+var gain=Math.sqrt(diffenergy/energy),phase=((dy*y+dx*x)%64+64)%64;var norm=.60*gain,acc=.5*(1+erf(norm/(2*.04*Math.sqrt(2))));
+paint(canvases[0],orig,1);paint(canvases[1],move,1);paint(canvases[2],diff,.2);
+document.getElementById("gain").textContent=gain.toFixed(4);
+document.getElementById("phase").textContent=phase+" / 64";
+document.getElementById("accuracy").textContent=(acc*100).toFixed(1)+"%";
+document.getElementById("explanation").textContent=gain<.001?"This pattern is exactly invariant under the remote shift: the hidden connection is invisible even though the pattern can be highly structured.":gain>.195?"This pattern changes sign after the long shift. At the same input energy, it is maximally informative for distinguishing the rival laws.":"The remote shift changes the pattern only partly. More amplitude may help, but the phase geometry determines how much evidence each unit of probe energy buys.";
+drawSpectrum(y,x);document.querySelectorAll("[data-preset]").forEach(function(b){var a=presets[b.dataset.preset];b.classList.toggle("active",!!a&&a[0]===y&&a[1]===x)});
+}
+document.querySelectorAll("[data-preset]").forEach(function(b){b.addEventListener("click",function(){setPreset(b.dataset.preset)})});
+ky.addEventListener("input",render);kx.addEventListener("input",render);render();
+})();
+</script></body></html>
