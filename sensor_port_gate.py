@@ -73,6 +73,9 @@ def sensor_series(rng, kind, count, sd):
 def actual_actuation(command, previous, case, rng):
     """How the *physical* action differs from the commanded action."""
     if case == "independent_actuator_noise":
+        # No spontaneous actuator noise when the command port is inactive.
+        if not np.any(command):
+            return command
         return command + .65 * BUDGET * white(rng)
     if case == "unknown_gain":
         return .55 * command
