@@ -27,6 +27,14 @@ Claude's 600-run sweep verified the look-away trap in an attention-only controll
 - **Gate 001:** two intentionally provided operators are exactly identical on a passive subspace; an optimal singular-vector probe separates them under fixed Gaussian noise. 30 seeds, eight numerical tests originally; [successful CI](https://github.com/anttiluode/Theorem/actions/runs/45038711769). A target pair can become distinguishable while the **global** input covariance still has 12 zero eigenvalues.
 - **Gate 002:** the actual (+17,−9) spatial offset in Luotain2 has 64 exact dark Fourier coordinates and 64 maximal ones under the declared remote-vs-local contrast on a 64×64 torus. [Successful CI](https://github.com/anttiluode/Theorem/actions/runs/45039130421). A textured (9,17) Fourier input remains exactly uninformative; an optimal (0,32) checkerboard is maximally discriminating. This Fourier geometry is textbook, not newly derived physics.
 
+### Gate 003: address recovery when the true stencil is actually hidden
+
+[Full Gate 003 report](GATE_003_REPORT.md) · [verified CI](https://github.com/anttiluode/Theorem/actions/runs/45039881706).
+
+This went beyond supplied-model discrimination. On the actual 64×64 Luotain2 wormhole one-step law, the estimator received known input/output probe pairs under Gaussian sensor noise SD 0.08, **but neither the true spatial offsets nor the number of terms**. It assumed a periodic linear convolution and known noise level. Complex cross-spectrum estimation plus a predeclared Gaussian false-positive threshold recovered exact six-term support in **20/20** new-seed trials with 48 equal-energy flat-spectrum probes, **19/20** with 48 white probes, and **0/20** with 48 smooth probes. All 60 no-law null runs had zero selected false connections. Code, full per-seed receipts, tests and limitations are committed.
+
+This is **established Fourier linear system identification**, not a new theorem and not the original Luotain2 passive noisy time-delay problem. It does, however, give a concrete instrument for determining whether a supposedly invisible remote link can be made measurable by a feasible input change.
+
 ## A genuinely interesting research question
 
 Can a learner obtain a reliable **candidate-specific excitation certificate without knowing which candidate is true**?
