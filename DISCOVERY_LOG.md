@@ -1,0 +1,54 @@
+# Research notebook — 2026-11-22
+
+## The candidate unifying statement
+
+**Identifiability is relative to the questions asked.**
+
+A weakly excited system may be unable to identify its *full* operator and still have ample information to distinguish two particular possible operators. Conversely, a complex and strongly changing signal can be exactly uninformative about a particular hidden connection if its variations lie in the nullspace of the **difference** between the candidate mechanisms.
+
+This is a precise *linear* statement. It should not be promoted to a theorem about every LLM, nervous system, image inverse problem, or nonlinear stochastic process.
+
+## Evidence audited
+
+### ShadowValley: zero-sum observational equivalence
+
+Claude's 600-run sweep verified the look-away trap in an attention-only controlled architecture. The follow-up 180-run causal probe [complement.py](https://github.com/anttiluode/shadowvalley/blob/main/complement.py) corrected an earlier overclaim: solved complement readers do exist, but attention maps in the tested standard blocks do not hide a complement circuit when attention points to the answer. Measured noise penalty 6.8–8.5× **variance**; ideal seven. Theorem's supplied direct/complement operators are an exactly solvable mathematical version, not a replication of trained transformers.
+
+### Luotain2: fixed-R IV versus OLS
+
+[FIXED_R_GATE](https://github.com/anttiluode/Luotain2/blob/main/FIXED_R_GATE.md) reports exact structural support recovery of **6/6 IV versus 0/6 OLS** at the chosen 1% process excitation level, with global latent amplitude and absolute sensor variance fixed. This was six synthetic runs across two special field worlds, three seeds each. At 2% both methods won 6/6; at 0% both lost 0/6. This is a useful method-specific phase transition, not a general theorem about the meaning of 1% noise.
+
+### HeadAsResonator3: referencing reveals confounding but not material
+
+[Real Gate 003B](https://github.com/anttiluode/HeadAsResonator3/blob/main/REAL_RESULT_003B.md) found strong audio-linked EEG voltage in five of nine recordings across two of three participants. Common-average reference suppressed >80% of the mean predictive R² in all five strong recordings. The recording reference is a **sensor-space transformation** and can remove genuine spatially shared neural activity along with artifacts. Nothing in these observations identifies skull versus cable versus microphone-electrode-interface origin.
+
+### New executable bridges in this repository
+
+- **Gate 001:** two intentionally provided operators are exactly identical on a passive subspace; an optimal singular-vector probe separates them under fixed Gaussian noise. 30 seeds, eight numerical tests originally; [successful CI](https://github.com/anttiluode/Theorem/actions/runs/45038711769). A target pair can become distinguishable while the **global** input covariance still has 12 zero eigenvalues.
+- **Gate 002:** the actual (+17,−9) spatial offset in Luotain2 has 64 exact dark Fourier coordinates and 64 maximal ones under the declared remote-vs-local contrast on a 64×64 torus. [Successful CI](https://github.com/anttiluode/Theorem/actions/runs/45039130421). A textured (9,17) Fourier input remains exactly uninformative; an optimal (0,32) checkerboard is maximally discriminating. This Fourier geometry is textbook, not newly derived physics.
+
+## A genuinely interesting research question
+
+Can a learner obtain a reliable **candidate-specific excitation certificate without knowing which candidate is true**?
+
+The experiments above use operators A and B supplied by us. That is their chief limitation. A promising workflow would:
+
+1. Fit an ensemble of plausible laws to the *same* noisy passive data, keeping supports and uncertainty honest.
+2. Discard explanations that fail independent held-out behavior; retain genuine near-ties.
+3. Compute where surviving candidates disagree in feasible input or mode space. For nonlinear models use local Jacobians or a robust finite-difference approximation rather than pretending a global linear matrix exists.
+4. Under a strict intervention-energy and safety budget, choose probes expected to separate candidates, against equal-energy random, broadband, smooth, and intentionally null probes.
+5. Hide the true simulator during proposal, probe choice and model selection, reveal it only for final scoring on unseen generators and random remote offsets.
+6. Report failures: no adequate rival proposals, no feasible input direction, incorrect confidence, wrong law despite good predictive fit, and sensor-noise confounding.
+
+If a method succeeds across *novel model families and natural data*, and rigorous prior-art search confirms a meaningful methodological difference, it may become a research contribution. If it does not, the outcome is still information: the geometric analogy has reached its limit.
+
+## Open scientific cautions
+
+- High temperature text sampling is NOT automatically independent measurement noise: generated tokens are fed into the future context and can create dependent effects.
+- Rare human turns of phrase are not automatically the process noise of an identifiable SDE; applying WAIVES to surprisal streams requires validating a dynamical model and instrument exogeneity.
+- A trained attention head can read through an equality constraint without learning the true independent causal input. That failure is distribution-specific, not universal to ordinary pre-LN transformers.
+- Nonlinear dynamics can have multiple operators that agree locally; Jacobian-based probe designs may leave the local regime under large interventions.
+- A strong observation-level Fourier mode is not necessarily a feasible or safe control input to a real physical system.
+- An identifiability score is question-specific. Report both **pairwise separability** and **global unidentifiability** rather than replacing one with the other.
+
+**Scientific status:** no novel universal theorem has been discovered here. We now have a formal, executable shared question—and a demanding next experiment that might uncover something beyond the known math.
