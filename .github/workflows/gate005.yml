@@ -1,0 +1,35 @@
+name: Theorem Gate 005 - Private-action IV with unknown noise and coefficients
+
+on:
+  push:
+    paths:
+      - 'active_iv_gate.py'
+      - 'tests/test_active_iv_gate.py'
+      - '.github/workflows/gate005.yml'
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  hidden-local-unknown-R:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install lightweight numeric dependencies
+        run: python -m pip install numpy pytest
+      - name: All theorem and active IV falsification tests
+        run: python -m pytest -q
+      - name: Frozen easy and held-out weak-link sweeps, including no-link worlds
+        run: python -m active_iv_gate --out results
+      - name: Upload full per-seed receipts, no private data
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: theorem-gate005-private-IV-results
+          path: |
+            results/gate005.json
+            results/gate005.md
+          if-no-files-found: warn
