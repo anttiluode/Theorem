@@ -103,7 +103,9 @@ def cross_transfer(U,Y,lag,start,end):
 
 
 def ratio(numerator,denominator,ridge=.005):
-    reg=ridge*np.median(abs(denominator)**2)
+    # Missing/zero-excitation bands must not produce NaN or fake certainty.
+    # Keep the numerical floor even if median input-response power is zero.
+    reg=max(1e-14,ridge*float(np.median(abs(denominator)**2)))
     return np.fft.ifft2(numerator*np.conj(denominator)/(
         abs(denominator)**2+reg)).real
 
