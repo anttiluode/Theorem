@@ -1,0 +1,33 @@
+name: Theorem Gate 002 - Original Luotain2 wormhole Fourier nulls
+
+on:
+  push:
+    paths:
+      - 'wormhole_gate.py'
+      - 'tests/test_wormhole_gate.py'
+      - '.github/workflows/gate002.yml'
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  spatial-probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install numpy pytest
+      - name: Test numerical Fourier shift and equal-energy probes
+        run: python -m pytest -q
+      - name: Frozen 30-seed spatial wormhole discrimination
+        run: python -m wormhole_gate --out results --seeds 30 --trials 3000
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: theorem-gate-002-wormhole-receipts
+          path: |
+            results/gate002.json
+            results/gate002.md
+          if-no-files-found: warn
