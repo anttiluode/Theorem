@@ -1,0 +1,37 @@
+name: Theorem Gate 006 - Colored sensors and imperfect actuators
+
+on:
+  push:
+    paths:
+      - 'sensor_port_gate.py'
+      - 'tests/test_sensor_port_gate.py'
+      - '.github/workflows/gate006.yml'
+  workflow_dispatch:
+
+jobs:
+  stress-intervention:
+    runs-on: ubuntu-latest
+    timeout-minutes: 16
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install numpy pytest
+      - name: All numerical and causal falsification checks
+        run: python -m pytest -q
+      - name: Verify tiny smoke evaluation without changing frozen settings
+        run: python -m sensor_port_gate --quick --out results/smoke006
+      - name: Independent held-out noise and actuator stress sweep
+        run: python -m sensor_port_gate --out results
+      - name: Keep complete seed-level receipts and mismatches
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: theorem-gate006-noise-actuator-receipts
+          path: |
+            results/gate006.json
+            results/gate006.md
+            results/smoke006/gate006.json
+            results/smoke006/gate006.md
+          if-no-files-found: warn
