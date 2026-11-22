@@ -185,7 +185,31 @@ With a real remote link, the appropriate lag/sham-corrected arm recovered **20/2
 
 **Limits:** all worlds are linear, periodic, spatially full-field and **deliberately stable/invertible**. The same exploratory 3.4× spatial MAD detector is not a valid FWER-corrected test. Case-specific analysis arms are compared; the system does **not yet automatically select** a correct echo ratio or prove that a proposed real sham is valid. This is prior-art system identification demonstrated as a reproducible scientific falsification instrument, not a new theorem or brain-source finding.
 
-## Reproduce all seven gates
+## Gate 008 — Kick the nonlinear equilibrium (and catch the nonlinear sensor)
+
+[**Complete preregistered report**](GATE_008_REPORT.md) · [frozen protocol](GATE_008_PROTOCOL.md) · [source and runnable experiment](equilibrium_gate.py) · [successful 72-test CI](https://github.com/anttiluode/Theorem/actions/runs/45050940878) · [all 1,240 per-case receipts](https://github.com/anttiluode/Theorem/actions/runs/45050940878/artifacts/14765286977) · [persistent numerical summary](results/gate008_summary.json).
+
+Following Claude's [Luotain2 weak-excitation and blind-noise study](https://github.com/anttiluode/Luotain2/blob/main/ESTIMATED_R_GATE.md), this gate moves beyond linear Fourier identification: **can a small, deliberately structured pulse separate cubic reaction from diffusion at a frozen Allen–Cahn equilibrium?**
+
+For a physically uniform equilibrium phase s=+1 or -1, the candidate one-step law is F(v;s)=v+D*Lap(v)+a*(v-s)+r*(v-v³). Without a pulse, all those laws produce the same unchanging observation. With equal-and-opposite pulses on **independently prepared identical starting states**, the even response is **-3*s*r*u²**, while the odd response contains diffusion and linear terms. The learner receives a candidate Lap/linear/cubic grammar, **not** the true support, coefficients or sensor noise variance.
+
+On **40 new seeded Allen–Cahn worlds (2001–2040), four +/- pulse pairs each**, equally energetic inputs with the same peak amplitude limit produced:
+
+| Probe | Physical cubic detected | Physical diffusion detected | Exact full support |
+|---|---:|---:|---:|
+| Passive equilibrium | **0/40** | 0/40 | 0/40 |
+| White broadband | **1/40** | **40/40** | 0/40 |
+| **Targeted sparse pulse** | **27/40** | **40/40** | **27/40** |
+| Single Fourier mode | 0/40 | 4/40 | 0/40 |
+| Wrongly logged action | 0/40 | 0/40 | 0/40 |
+
+The targeted pattern concentrates bounded amplitude into a sparse set of pixels, maximizing the *hypothesized cubic response information* at the same total energy. **For this narrowly defined curvature-identification task it outperformed white**, whereas earlier Gates 004–005 showed white noise winning the broad search for unknown linear spatial offsets. The difference is the information objective, not a contradiction.
+
+**An equally important physical-source failure:** in a truly diffusion-only world, an adversarial nonlinear sensor produced **21/40 false cubic reactions** with the targeted probe and 3/40 with white. A separate, trusted linear reference measurement eliminated those false cubic claims (0/40) and correctly recovered the diffusion-only law (40/40). Meanwhile, deliberately mislogged interventions produced a spurious linear-relaxation term in **40/40** true Allen–Cahn worlds even though they recovered the correct cubic law in 0/40.
+
+The rigorous boundary is the setup itself: **uniform +/-1 bulk equilibrium, matched repeated latent preparations, known candidate feature grammar, ideal actuation records and favorable independent Gaussian errors**. These are not a real experiment, an unreset Allen–Cahn domain-wall system, a complete blind nonlinear-law discoverer, or a new mathematical theorem. The detector artifact shows why a perfectly informative active test still needs credible physical sensor calibration.
+
+## Reproduce all eight gates
 
 Requirements: **Python 3.10+**, NumPy and pytest. CPU only; no torch or GPU. On Windows you can use Python 3.13.
 
@@ -199,9 +223,10 @@ py -3.13 -m temporal_gate --out results
 py -3.13 -m active_iv_gate --out results
 py -3.13 -m sensor_port_gate --out results
 py -3.13 -m multilag_gate --out results
+py -3.13 -m equilibrium_gate --out results
 ~~~
 
-Or use plain python on Linux/macOS. The seven GitHub Actions workflows run all tests and archive complete seed-level JSON receipts:
+Or use plain python on Linux/macOS. The eight GitHub Actions workflows run all tests and archive complete seed-level JSON receipts:
 
 - [Gate 001 CI results](https://github.com/anttiluode/Theorem/actions/runs/45038711769)
 - [Gate 002 CI results](https://github.com/anttiluode/Theorem/actions/runs/45039130421)
@@ -210,6 +235,7 @@ Or use plain python on Linux/macOS. The seven GitHub Actions workflows run all t
 - [Gate 005 CI results](https://github.com/anttiluode/Theorem/actions/runs/45043279743)
 - [Gate 006 CI results](https://github.com/anttiluode/Theorem/actions/runs/45044598034)
 - [Gate 007 CI results](https://github.com/anttiluode/Theorem/actions/runs/45047960483)
+- [Gate 008 CI results](https://github.com/anttiluode/Theorem/actions/runs/45050940878)
 
 ## Scientific boundaries
 
@@ -223,15 +249,13 @@ HeadAsResonator3's reference subtraction is a sensor-space operation and is **no
 
 ## Next actual research gate
 
-**Make the sham imperfect, and make the instrument refuse when it cannot disambiguate.** Gate 007 shows that multi-lag impulse responses resolve a secretly shifted actuator or a memoryless sensor bypass under favorable invertible linear dynamics, but detector ringing remains an attribution problem. A separately measured sham fixes our synthetic examples **because** it is accurately coupled to the detector artifact.
+**Take the instrument off the synthetic treadmill and give it real, independently calibrated input–output data.** Gate 008 shows that nonlinear curvature can become identifiable at an equilibrium using matched +/- interventions, and that a nonlinear detector can mimic that physical reaction in 21/40 held-out simulated worlds.
 
-A worthwhile next experiment is to hide the sham's gain/phase/latency; add action-dependent sensor feedthrough, sensor mixing and multiple independent detector artifacts; and ask whether a multi-channel calibration protocol can identify the correct component without being told which channel is trustworthy. On unseen worlds, score **unjustified physical claims and abstention** as well as location accuracy. Keep uncalibrated sham and memoryless-only assumptions as kill controls.
+The immediate scientific blocker is the favorable *perfectly repeated identical starting state*. A real nonlinear physical system may not return to the same state between positive and negative pulses; a true sensor may have its own curvature and delay. Search for a public physical recording with **recorded controlled input pulses, repeatable initial conditions, exact timing and at least one independently calibrated measurement channel** (optical trap, mechanical resonator, thermal actuator or well-described electronics). Do not assume an arbitrary passive wave or EEG file provides the matched experiment this method requires.
 
-This is the direction toward a real instrument for investigating HeadAsResonator's reference/microphone/EEG relationships. Our archived overt-speech EEG is observational; it cannot automatically be treated as a randomized actuator experiment or converted into anatomical proof by these synthetic tests.
+A practical bridge to Claude's Luotain2 would compare **three distinct instruments** on the same held-out physical data: passive nonlinear polynomial law selection with blindly estimated R, active +/- pulse finite differences, and one independent actuator/detector calibration. A successful system should be able to declare **unidentifiable** when the instrument paths or initial states cannot be separated.
 
-Claude's Luotain2 nonlinear blind-poly branch remains complementary: its exact Hermite corrected scoring uses a known Gaussian sensor variance R, whereas Theorem's active IV avoids R under a known actuation port and strong linear convolution assumptions. Both are useful, and neither solves the other's physical calibration problem.
-
-**Theorem is not a claim to a novel universal theorem.** It is a battery of increasingly precise, falsifiable identifiability tests, with explicit negative controls and prior art.
+Established prior art covers pulse design and reaction-diffusion identification; do not promote numerical synthetic gate results to a novel theorem without independently demonstrated new mathematics or an original method beating strong published controls.
 
 ## Prior art
 
