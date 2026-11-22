@@ -1,0 +1,73 @@
+{
+  "gate": "001",
+  "status": "passed",
+  "date": "2026-11-22",
+  "synthetic_only": true,
+  "workflow": "https://github.com/anttiluode/Theorem/actions/runs/45038711769",
+  "complete_artifact": "https://github.com/anttiluode/Theorem/actions/runs/45038711769/artifacts/14761240210",
+  "tests_passed_in_run": 8,
+  "seeds": "501–530",
+  "trials_per_seed_per_probe": 3000,
+  "purpose": "distinguish two known mechanisms that agree exactly on passive inputs",
+  "criteria": "equal Euclidean perturbation power; isotropic Gaussian output noise",
+  "results": [
+    {
+      "case": "zero-sum complement read",
+      "kind": "tangent",
+      "mean_separation_squared": 0,
+      "predicted_accuracy": 0.5,
+      "empirical_accuracy": 0.503
+    },
+    {
+      "case": "zero-sum complement read",
+      "kind": "random",
+      "mean_separation_squared": 0.01348,
+      "predicted_accuracy": 0.617,
+      "empirical_accuracy": 0.616
+    },
+    {
+      "case": "zero-sum complement read",
+      "kind": "random within dark subspace",
+      "mean_separation_squared": 0.1152,
+      "predicted_accuracy": 0.856,
+      "empirical_accuracy": 0.856
+    },
+    {
+      "case": "zero-sum complement read",
+      "kind": "optimal",
+      "mean_separation_squared": 0.1152,
+      "predicted_accuracy": 0.856,
+      "empirical_accuracy": 0.855
+    },
+    {
+      "case": "constructed stable field",
+      "kind": "tangent",
+      "mean_separation_squared": 0,
+      "predicted_accuracy": 0.5,
+      "empirical_accuracy": 0.503
+    },
+    {
+      "case": "constructed stable field",
+      "kind": "random",
+      "mean_separation_squared": 0.007633,
+      "predicted_accuracy": 0.687,
+      "empirical_accuracy": 0.685
+    },
+    {
+      "case": "constructed stable field",
+      "kind": "random within dark subspace",
+      "mean_separation_squared": 0.010256,
+      "predicted_accuracy": 0.713,
+      "empirical_accuracy": 0.714
+    },
+    {
+      "case": "constructed stable field",
+      "kind": "optimal",
+      "mean_separation_squared": 0.099225,
+      "predicted_accuracy": 0.988,
+      "empirical_accuracy": 0.988
+    }
+  ],
+  "key": "An additional targeted dimension can distinguish a nominated pair although covariance rank remains 4/16; global minimum eigenvalue remains zero.",
+  "limitations": "Both operators and support are given; no blind inference, no learned transformer, no actual Luotain2 wormhole. Rounded accuracies taken from passing CI report; full per-seed receipts in artifact."
+}
