@@ -1,0 +1,400 @@
+{
+  "study": "Theorem Gate 007 — multi-lag causal propagation vs direct and ringing sensor bypass",
+  "date": "2026-11-22",
+  "status": "success",
+  "github_workflow": "https://github.com/anttiluode/Theorem/actions/runs/45047960483",
+  "complete_receipts": "https://github.com/anttiluode/Theorem/actions/runs/45047960483/artifacts/14764790289",
+  "protocol": "https://github.com/anttiluode/Theorem/blob/main/GATE_007_PROTOCOL.md",
+  "tests_passed": 59,
+  "frozen_remote_seed_range": "7101–7120",
+  "frozen_no_link_seed_range": "8101–8120",
+  "number_condition_specific_trajectories": 200,
+  "number_distinct_seed_indices_per_world_type": 20,
+  "conditions": 5,
+  "analysis_arms": 7,
+  "actions_per_trajectory": 256,
+  "action_l2": 0.85,
+  "per_pixel_sensor_noise_sd": 0.006,
+  "sham_sensor_noise_sd": 0.004,
+  "model": "Continuous-periodic linear shift-invariant 64x64 field, stable invertible H with one optional remote link; independent private white actions",
+  "exact_math": {
+    "state": "x[t+1] = H*(x[t]+G*u[t])+w[t]",
+    "bypass": "z[t+1] = K*z[t]+D*u[t]",
+    "primary_sensor": "y[t+1] = x[t+1]+z[t+1]+epsilon[t+1]",
+    "sham": "sham[t+1] = z[t+1]+epsilon_sham[t+1]",
+    "impulse_response": "R_l = H^l G + K^(l-1)D",
+    "no_detector_bypass": "R2/R1=H when R1 invertible",
+    "memoryless_detector_bypass": "R3/R2=H when R2 invertible",
+    "matched_ringing": "K=H: same entire impulse-response series as altered effective actuator G'=G+H^-1 D; bypass not separately identified from one sensor",
+    "unknown_sensor_mixing": "C H C^-1 similarity ambiguity; physical spatial connectivity not recovered from unknown sensor coordinates alone"
+  },
+  "groups": [
+    {
+      "physical_case": "ideal",
+      "method": "first echo",
+      "remote_correct": 20,
+      "remote_total": 20,
+      "null_correct": 20,
+      "null_total": 20,
+      "false_physical_remote_in_null": 0,
+      "null_total_for_false": 20
+    },
+    {
+      "physical_case": "ideal",
+      "method": "R2/R1",
+      "remote_correct": 20,
+      "remote_total": 20,
+      "null_correct": 20,
+      "null_total": 20,
+      "false_physical_remote_in_null": 0,
+      "null_total_for_false": 20
+    },
+    {
+      "physical_case": "ideal",
+      "method": "R3/R2",
+      "remote_correct": 20,
+      "remote_total": 20,
+      "null_correct": 20,
+      "null_total": 20,
+      "false_physical_remote_in_null": 0,
+      "null_total_for_false": 20
+    },
+    {
+      "physical_case": "ideal",
+      "method": "sham-subtracted R2/R1",
+      "remote_correct": 20,
+      "remote_total": 20,
+      "null_correct": 20,
+      "null_total": 20,
+      "false_physical_remote_in_null": 0,
+      "null_total_for_false": 20
+    },
+    {
+      "physical_case": "ideal",
+      "method": "sham-subtracted R3/R2",
+      "remote_correct": 20,
+      "remote_total": 20,
+      "null_correct": 20,
+      "null_total": 20,
+      "false_physical_remote_in_null": 0,
+      "null_total_for_false": 20
+    },
+    {
+      "physical_case": "ideal",
+      "method": "sham channel alone",
+      "remote_correct": 0,
+      "remote_total": 20,
+      "null_correct": 20,
+      "null_total": 20,
+      "false_physical_remote_in_null": 0,
+      "null_total_for_false": 20
+    },
+    {
+      "physical_case": "ideal",
+      "method": "fake-sham R2/R1",
+      "remote_correct": 20,
+      "remote_total": 20,
+      "null_correct": 20,
+      "null_total": 20,
+      "false_physical_remote_in_null": 0,
+      "null_total_for_false": 20
+    },
+    {
+      "physical_case": "shifted_actuator",
+      "method": "first echo",
+      "remote_correct": 0,
+      "remote_total": 20,
+      "null_correct": 0,
+      "null_total": 20,
+      "false_physical_remote_in_null": 20,
+      "null_total_for_false": 20
+    },
+    {
+      "physical_case": "shifted_actuator",
+      "method": "R2/R1",
+      "remote_correct": 20,
+      "remote_total": 20,
+      "null_correct": 20,
+      "null_total": 20,
+      "false_physical_remote_in_null": 0,
+      "null_total_for_false": 20
+    },
+    {
+      "physical_case": "shifted_actuator",
+      "method": "R3/R2",
+      "remote_correct": 20,
+      "remote_total": 20,
+      "null_correct": 20,
+      "null_total": 20,
+      "false_physical_remote_in_null": 0,
+      "null_total_for_false": 20
+    },
+    {
+      "physical_case": "shifted_actuator",
+      "method": "sham-subtracted R2/R1",
+      "remote_correct": 20,
+      "remote_total": 20,
+      "null_correct": 20,
+      "null_total": 20,
+      "false_physical_remote_in_null": 0,
+      "null_total_for_false": 20
+    },
+    {
+      "physical_case": "shifted_actuator",
+      "method": "sham-subtracted R3/R2",
+      "remote_correct": 20,
+      "remote_total": 20,
+      "null_correct": 20,
+      "null_total": 20,
+      "false_physical_remote_in_null": 0,
+      "null_total_for_false": 20
+    },
+    {
+      "physical_case": "shifted_actuator",
+      "method": "sham channel alone",
+      "remote_correct": 0,
+      "remote_total": 20,
+      "null_correct": 20,
+      "null_total": 20,
+      "false_physical_remote_in_null": 0,
+      "null_total_for_false": 20
+    },
+    {
+      "physical_case": "shifted_actuator",
+      "method": "fake-sham R2/R1",
+      "remote_correct": 20,
+      "remote_total": 20,
+      "null_correct": 20,
+      "null_total": 20,
+      "false_physical_remote_in_null": 0,
+      "null_total_for_false": 20
+    },
+    {
+      "physical_case": "memoryless_bypass",
+      "method": "first echo",
+      "remote_correct": 0,
+      "remote_total": 20,
+      "null_correct": 0,
+      "null_total": 20,
+      "false_physical_remote_in_null": 20,
+      "null_total_for_false": 20
+    },
+    {
+      "physical_case": "memoryless_bypass",
+      "method": "R2/R1",
+      "remote_correct": 0,
+      "remote_total": 20,
+      "null_correct": 0,
+      "null_total": 20,
+      "false_physical_remote_in_null": 20,
+      "null_total_for_false": 20
+    },
+    {
+      "physical_case": "memoryless_bypass",
+      "method": "R3/R2",
+      "remote_correct": 20,
+      "remote_total": 20,
+      "null_correct": 20,
+      "null_total": 20,
+      "false_physical_remote_in_null": 0,
+      "null_total_for_false": 20
+    },
+    {
+      "physical_case": "memoryless_bypass",
+      "method": "sham-subtracted R2/R1",
+      "remote_correct": 20,
+      "remote_total": 20,
+      "null_correct": 20,
+      "null_total": 20,
+      "false_physical_remote_in_null": 0,
+      "null_total_for_false": 20
+    },
+    {
+      "physical_case": "memoryless_bypass",
+      "method": "sham-subtracted R3/R2",
+      "remote_correct": 20,
+      "remote_total": 20,
+      "null_correct": 20,
+      "null_total": 20,
+      "false_physical_remote_in_null": 0,
+      "null_total_for_false": 20
+    },
+    {
+      "physical_case": "memoryless_bypass",
+      "method": "sham channel alone",
+      "remote_correct": 0,
+      "remote_total": 20,
+      "null_correct": 0,
+      "null_total": 20,
+      "false_physical_remote_in_null": 20,
+      "null_total_for_false": 20
+    },
+    {
+      "physical_case": "memoryless_bypass",
+      "method": "fake-sham R2/R1",
+      "remote_correct": 0,
+      "remote_total": 20,
+      "null_correct": 0,
+      "null_total": 20,
+      "false_physical_remote_in_null": 20,
+      "null_total_for_false": 20
+    },
+    {
+      "physical_case": "matched_ringing_bypass",
+      "method": "first echo",
+      "remote_correct": 0,
+      "remote_total": 20,
+      "null_correct": 0,
+      "null_total": 20,
+      "false_physical_remote_in_null": 20,
+      "null_total_for_false": 20
+    },
+    {
+      "physical_case": "matched_ringing_bypass",
+      "method": "R2/R1",
+      "remote_correct": 20,
+      "remote_total": 20,
+      "null_correct": 0,
+      "null_total": 20,
+      "false_physical_remote_in_null": 20,
+      "null_total_for_false": 20
+    },
+    {
+      "physical_case": "matched_ringing_bypass",
+      "method": "R3/R2",
+      "remote_correct": 20,
+      "remote_total": 20,
+      "null_correct": 1,
+      "null_total": 20,
+      "false_physical_remote_in_null": 19,
+      "null_total_for_false": 20
+    },
+    {
+      "physical_case": "matched_ringing_bypass",
+      "method": "sham-subtracted R2/R1",
+      "remote_correct": 20,
+      "remote_total": 20,
+      "null_correct": 20,
+      "null_total": 20,
+      "false_physical_remote_in_null": 0,
+      "null_total_for_false": 20
+    },
+    {
+      "physical_case": "matched_ringing_bypass",
+      "method": "sham-subtracted R3/R2",
+      "remote_correct": 20,
+      "remote_total": 20,
+      "null_correct": 20,
+      "null_total": 20,
+      "false_physical_remote_in_null": 0,
+      "null_total_for_false": 20
+    },
+    {
+      "physical_case": "matched_ringing_bypass",
+      "method": "sham channel alone",
+      "remote_correct": 0,
+      "remote_total": 20,
+      "null_correct": 0,
+      "null_total": 20,
+      "false_physical_remote_in_null": 20,
+      "null_total_for_false": 20
+    },
+    {
+      "physical_case": "matched_ringing_bypass",
+      "method": "fake-sham R2/R1",
+      "remote_correct": 20,
+      "remote_total": 20,
+      "null_correct": 0,
+      "null_total": 20,
+      "false_physical_remote_in_null": 20,
+      "null_total_for_false": 20
+    },
+    {
+      "physical_case": "different_ringing_bypass",
+      "method": "first echo",
+      "remote_correct": 0,
+      "remote_total": 20,
+      "null_correct": 0,
+      "null_total": 20,
+      "false_physical_remote_in_null": 20,
+      "null_total_for_false": 20
+    },
+    {
+      "physical_case": "different_ringing_bypass",
+      "method": "R2/R1",
+      "remote_correct": 20,
+      "remote_total": 20,
+      "null_correct": 0,
+      "null_total": 20,
+      "false_physical_remote_in_null": 20,
+      "null_total_for_false": 20
+    },
+    {
+      "physical_case": "different_ringing_bypass",
+      "method": "R3/R2",
+      "remote_correct": 20,
+      "remote_total": 20,
+      "null_correct": 0,
+      "null_total": 20,
+      "false_physical_remote_in_null": 20,
+      "null_total_for_false": 20
+    },
+    {
+      "physical_case": "different_ringing_bypass",
+      "method": "sham-subtracted R2/R1",
+      "remote_correct": 20,
+      "remote_total": 20,
+      "null_correct": 20,
+      "null_total": 20,
+      "false_physical_remote_in_null": 0,
+      "null_total_for_false": 20
+    },
+    {
+      "physical_case": "different_ringing_bypass",
+      "method": "sham-subtracted R3/R2",
+      "remote_correct": 20,
+      "remote_total": 20,
+      "null_correct": 20,
+      "null_total": 20,
+      "false_physical_remote_in_null": 0,
+      "null_total_for_false": 20
+    },
+    {
+      "physical_case": "different_ringing_bypass",
+      "method": "sham channel alone",
+      "remote_correct": 0,
+      "remote_total": 20,
+      "null_correct": 0,
+      "null_total": 20,
+      "false_physical_remote_in_null": 20,
+      "null_total_for_false": 20
+    },
+    {
+      "physical_case": "different_ringing_bypass",
+      "method": "fake-sham R2/R1",
+      "remote_correct": 20,
+      "remote_total": 20,
+      "null_correct": 0,
+      "null_total": 20,
+      "false_physical_remote_in_null": 20,
+      "null_total_for_false": 20
+    }
+  ],
+  "critical_findings": [
+    "Unknown shifted actuator produces 20/20 false remote claims from first echo in no-link worlds but R2/R1 fixes all 20.",
+    "Memoryless direct sensor bypass produces 20/20 false remote first-echo claims; R3/R2 fixes all 20.",
+    "Matching ringing sensor bypass persists: R2/R1 reports 20/20 false remote links and R3/R2 19/20 false in no-link worlds despite noiseless theoretical equality of ratios to H; numerical near-cancellation and noise cause false support.",
+    "Different ringing sensor bypass yields 20/20 false remote links even for R3/R2 in no-link worlds.",
+    "With a correctly wired separate sham channel subtracting z, every physical condition had 20/20 correct remote and 20/20 no-link refusal at both measured ratios.",
+    "Fake sham noise subtraction does not rescue memoryless/ringing bypass, preserving 20/20 false-link rate in each no-link condition.",
+    "All cases synthetic, and no claim that a sham channel is mathematically the only possible auxiliary calibration."
+  ],
+  "limitations": [
+    "Strong stable-invertible operator construction allows spectral ratios, not universal",
+    "Remote-selection threshold same heuristic 3.4 spatial MAD across split time windows; not calibrated FWER",
+    "Temporal halves share evolving state and are not independent trials",
+    "True sham precisely measures bypass but not world and is correctly aligned/calibrated by construction",
+    "Direct input dependent coupling, noncommuting sensor transformation and nonlinear/multi-lag sources remain hard",
+    "All results from synthetic full-field data, no EEG source identification, no new theorem"
+  ]
+}
