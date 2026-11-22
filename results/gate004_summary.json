@@ -1,0 +1,166 @@
+{
+  "experiment": "Gate 004: Temporal no-reset identifiability under limited interventions",
+  "date": "2026-11-22",
+  "status": "success",
+  "CI": "https://github.com/anttiluode/Theorem/actions/runs/45041594315",
+  "artifact": "https://github.com/anttiluode/Theorem/actions/runs/45041594315/artifacts/14762031846",
+  "report": "https://github.com/anttiluode/Theorem/blob/main/GATE_004_REPORT.md",
+  "tests_passed": 30,
+  "random_unseen_remote_offsets": 40,
+  "null_worlds": 40,
+  "offsets_competed": 4096,
+  "observation_sensor_sd": 0.01,
+  "initial_latent_spatial_sd": 0.25,
+  "intervention_l2_norm": 0.45,
+  "passive_transitions": 24,
+  "active_transitions": 16,
+  "checkpoints_active_interventions": [
+    0,
+    2,
+    4,
+    8,
+    16
+  ],
+  "algorithmic_assumptions": [
+    "exact known spatially local baseline .6 self+.1 four-neighbors",
+    "single spatial shift with known positive coefficient .1 or no link",
+    "64x64 periodic linear convolution",
+    "independent additive sensor noise with known absolute variance",
+    "agent can inject controlled input before each new transition"
+  ],
+  "remote_correct_of_40": {
+    "passive": {
+      "0": 3,
+      "2": 2,
+      "4": 1,
+      "8": 1,
+      "16": 1
+    },
+    "targeted": {
+      "0": 3,
+      "2": 7,
+      "4": 22,
+      "8": 39,
+      "16": 40
+    },
+    "random_fourier": {
+      "0": 3,
+      "2": 4,
+      "4": 19,
+      "8": 37,
+      "16": 40
+    },
+    "white": {
+      "0": 3,
+      "2": 10,
+      "4": 32,
+      "8": 40,
+      "16": 40
+    },
+    "fixed_fourier": {
+      "0": 3,
+      "2": 2,
+      "4": 1,
+      "8": 1,
+      "16": 1
+    }
+  },
+  "null_correct_of_40": {
+    "passive": {
+      "0": 2,
+      "2": 4,
+      "4": 3,
+      "8": 0,
+      "16": 2
+    },
+    "targeted": {
+      "0": 2,
+      "2": 5,
+      "4": 25,
+      "8": 40,
+      "16": 40
+    },
+    "random_fourier": {
+      "0": 2,
+      "2": 7,
+      "4": 21,
+      "8": 36,
+      "16": 40
+    },
+    "white": {
+      "0": 2,
+      "2": 9,
+      "4": 30,
+      "8": 40,
+      "16": 40
+    },
+    "fixed_fourier": {
+      "0": 2,
+      "2": 4,
+      "4": 3,
+      "8": 0,
+      "16": 2
+    },
+    "targeted_without_R": {
+      "0": 0,
+      "2": 0,
+      "4": 0,
+      "8": 0,
+      "16": 0
+    },
+    "white_without_R": {
+      "0": 0,
+      "2": 0,
+      "4": 0,
+      "8": 0,
+      "16": 0
+    }
+  },
+  "additional_process_stress_20_seeds": [
+    {
+      "process_sd": 0,
+      "passive_correct_after_24_of_20": 0,
+      "passive_correct_after_28_of_20": 0,
+      "passive_correct_after_32_of_20": 0,
+      "targeted_correct_after_8_of_20": 20,
+      "white_correct_after_8_of_20": 20
+    },
+    {
+      "process_sd": 0.0002,
+      "passive_correct_after_24_of_20": 0,
+      "passive_correct_after_28_of_20": 0,
+      "passive_correct_after_32_of_20": 0,
+      "targeted_correct_after_8_of_20": 20,
+      "white_correct_after_8_of_20": 20
+    },
+    {
+      "process_sd": 0.001,
+      "passive_correct_after_24_of_20": 0,
+      "passive_correct_after_28_of_20": 0,
+      "passive_correct_after_32_of_20": 0,
+      "targeted_correct_after_8_of_20": 20,
+      "white_correct_after_8_of_20": 20
+    },
+    {
+      "process_sd": 0.003,
+      "passive_correct_after_24_of_20": 18,
+      "passive_correct_after_28_of_20": 20,
+      "passive_correct_after_32_of_20": 20,
+      "targeted_correct_after_8_of_20": 20,
+      "white_correct_after_8_of_20": 20
+    }
+  ],
+  "primary_conclusion": "Breaking a passive exact alias in a continuously evolving unknown-offset simulator makes correct remote address recovery possible; an observation-error correction prevents false remote links in known-R null worlds.",
+  "important_negative": "Broadband white noise outperformed the candidate-directed Fourier strategy at 2/4/8 actions: 10/32/40 of 40 versus 7/22/39 of 40, while both reached 40/40 after 16. The targeted policy has not demonstrated superiority to white noise.",
+  "sensor_noise_ablation": "At 16 active steps, corrected null detection was 40/40 for both white and targeted; setting calibrated R falsely to 0 yielded 0/40 for both under identical hidden null physics.",
+  "process_caveat": "Stochastic process disturbances also excite missing modes in this synthetic world, but process variance changes total latent power; no universal threshold or comparison with Luotain2 fixed-R normalization is claimed.",
+  "limitations": [
+    "Remote coefficient and local stencil supplied",
+    "Time lag fixed to one",
+    "Small synthetic known model family and controlled actions",
+    "Sensor error known i.i.d.; correlated/unknown errors untested",
+    "No confidence intervals or false discovery bounds for selected candidate",
+    "No real data or physically constrained action",
+    "Not a novel theorem or proof of a general law of AI"
+  ]
+}
