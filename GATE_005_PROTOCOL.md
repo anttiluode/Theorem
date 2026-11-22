@@ -32,7 +32,7 @@ If instead one deterministically sets u[t] = -a*y[t]/||y[t]||, the chosen action
 
 ## How a remote link is selected without knowing R
 
-The first half of the 48 independently randomized action/response pairs estimates the entire spatial impulse kernel. The largest estimated coefficient **outside the declared local neighborhood** is proposed as the remote link. A coefficient is accepted only if it exceeds a robust spatial median-absolute-deviation noise proxy by a fixed factor 3.4 in that first half and if the **second, separate half** independently confirms its sign and exceeds the same threshold.
+The first half of the 48 independently randomized action/response pairs estimates the entire spatial impulse kernel. The largest estimated coefficient **outside the declared local neighborhood** is proposed as the remote link. A coefficient is accepted only if it exceeds a robust spatial median-absolute-deviation noise proxy by a fixed factor 3.4 in that first half and if the **second, non-overlapping half** confirms its sign and exceeds the same threshold under fresh private randomization. The halves are not unconditionally independent because the evolving latent state and adaptive action shapes depend on the first half.
 
 This is **not a family-wise calibrated significance test**. Coefficient errors can be correlated in space and across time, and the sparse-kernel assumption is necessary for the spatial MAD proxy to behave like a noise estimate. No formal p-value or false-link guarantee is claimed.
 
