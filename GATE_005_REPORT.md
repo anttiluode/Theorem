@@ -14,7 +14,7 @@ The underlying system is still assumed to be linear, sparse, spatially shift inv
 
 All 64×64 worlds evolve continuously, with 16 passive transitions followed by 48 equal-power interventions. The generator draws the local self and neighboring coupling strengths, optional **one random nonlocal link of either sign**, hidden remote address, and sensor noise SD. No model coefficient, offset or R is supplied to the estimator.
 
-The learner combines the Fourier cross-power of the *actual independently randomized action* with the following measured frame, estimates a full spatial kernel, then selects a candidate outside a predeclared local radius. Candidate selection uses only the **first half** of the intervention records; the **second half** must independently reproduce a same-sign effect above its own spatial MAD threshold (3.4×).
+The learner combines the Fourier cross-power of the *actual independently randomized action* with the following measured frame, estimates a full spatial kernel, then selects a candidate outside a predeclared local radius. Candidate selection uses only the **first half** of the intervention records; the **second non-overlapping block** must reproduce a same-sign effect above its own spatial MAD threshold (3.4×). These blocks are not unconditionally independent: the evolving state and adaptive action shapes depend on earlier data. The fresh private random signs provide conditional exogeneity, not a traditional independent-sample p-value.
 
 The noise proxy is derived from the **spatial spread of estimated kernel coefficients**, using sparsity as an assumption. This is **not** a validated family-wise false-positive control; the claim is solely what happened in these sampled simulations.
 
