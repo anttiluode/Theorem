@@ -161,7 +161,31 @@ Unknown gain biased the internal weight estimates (mean local MAE 0.0672 instead
 
 **Limits:** these are synthetic worlds with a full-field sensor, one optional remote link, sparse linear spatial convolution and an exploratory non-FWER-corrected remote coefficient threshold. The 40/40 successes and failures are sample counts, not universal guarantees; they cannot locate brain, skull or cable sources from EEG.
 
-## Reproduce all six gates
+## Gate 007 — Later echoes can rescue a false wormhole; a ringing detector may not
+
+[**Gate 007 scientific report**](GATE_007_REPORT.md) · [frozen protocol](GATE_007_PROTOCOL.md) · [source](multilag_gate.py) · [59-test successful workflow](https://github.com/anttiluode/Theorem/actions/runs/45047960483) · [200-trajectory per-seed artifact](https://github.com/anttiluode/Theorem/actions/runs/45047960483/artifacts/14764790289) · [machine-readable summary](results/gate007_summary.json).
+
+Neon caught a qualification to Gate 006's false-actuator result: one measurement of a shifted action can look like an internal distant link, but **the subsequent echoes can cancel the actuator**. With a linear world H, unknown actuator G and no direct detector bypass, the first two transfers are R1=HG and R2=H²G; when the response is invertible, **R2/R1 = H**. If a *memoryless* sensor bypass D also feeds into R1, the later **R3/R2** still recovers H. These are established Markov-parameter identities.
+
+We ran a new 64×64 **continuous, no-reset synthetic experiment**, with unknown signed remote addresses/weights, 256 randomized white inputs, five physical conditions, 20 new real-link worlds and 20 new no-link worlds per condition (200 seeded condition trajectories). Results for **correct refusal in physically no-link worlds**:
+
+| Hidden input/output geometry | Naive first-echo fit | R2/R1 | R3/R2 | Correct sham subtraction + R2/R1 |
+|---|---:|---:|---:|---:|
+| Ideal instrument | 20/20 | 20/20 | 20/20 | 20/20 |
+| **Actuator secretly shifts command (+5,+7)** | **0/20** | **20/20** | **20/20** | 20/20 |
+| **Memoryless sensor-only bypass (+5,+7)** | **0/20** | 0/20 | **20/20** | 20/20 |
+| **Ringing sensor bypass K=H** | **0/20** | **0/20** | **1/20** | **20/20** |
+| **Different ringing bypass K=0.55I** | **0/20** | **0/20** | **0/20** | **20/20** |
+
+With a real remote link, the appropriate lag/sham-corrected arm recovered **20/20 exact remote addresses** in every condition. An unrelated *fake sham* did not rescue the bypass cases. The sham is assumed to measure the sensor-only bypass without latent world signal and with correct gain/timing: a **strong unproven calibration assumption** outside this simulator.
+
+**Why ringing is special:** if the detector happens to ring under the same operator H as the world, the entire impulse-response sequence can be reproduced by **a different effective actuator G' = G + H^-1D**, with *no detector bypass*. Multi-lag data may reveal H while leaving the physical entry path unidentifiable. Moreover, ratio estimates of *noisy* transfer functions can amplify partial spectral cancellation and produce spurious inferred links even when the exact mathematical ratio equals H. The simulated sham rescues those decisions; it is not the only conceivable physical calibration.
+
+**Unknown sensor coordinates are another independent trap.** A finite-matrix test permuted an 8×8-grid sensor basis and turned a physically local-only adjacency graph (0 remote edges) into a measured-coordinate graph with **242 apparently nonlocal edges**, while preserving all trajectories under an exact C H C^-1 similarity. No echo ratio alone recovers the correct anatomical coordinates without calibrating C.
+
+**Limits:** all worlds are linear, periodic, spatially full-field and **deliberately stable/invertible**. The same exploratory 3.4× spatial MAD detector is not a valid FWER-corrected test. Case-specific analysis arms are compared; the system does **not yet automatically select** a correct echo ratio or prove that a proposed real sham is valid. This is prior-art system identification demonstrated as a reproducible scientific falsification instrument, not a new theorem or brain-source finding.
+
+## Reproduce all seven gates
 
 Requirements: **Python 3.10+**, NumPy and pytest. CPU only; no torch or GPU. On Windows you can use Python 3.13.
 
@@ -174,9 +198,10 @@ py -3.13 -m blind_kernel_gate --out results
 py -3.13 -m temporal_gate --out results
 py -3.13 -m active_iv_gate --out results
 py -3.13 -m sensor_port_gate --out results
+py -3.13 -m multilag_gate --out results
 ~~~
 
-Or use plain python on Linux/macOS. The six GitHub Actions workflows run all tests and archive complete seed-level JSON receipts:
+Or use plain python on Linux/macOS. The seven GitHub Actions workflows run all tests and archive complete seed-level JSON receipts:
 
 - [Gate 001 CI results](https://github.com/anttiluode/Theorem/actions/runs/45038711769)
 - [Gate 002 CI results](https://github.com/anttiluode/Theorem/actions/runs/45039130421)
@@ -184,6 +209,7 @@ Or use plain python on Linux/macOS. The six GitHub Actions workflows run all tes
 - [Gate 004 CI results](https://github.com/anttiluode/Theorem/actions/runs/45041594315)
 - [Gate 005 CI results](https://github.com/anttiluode/Theorem/actions/runs/45043279743)
 - [Gate 006 CI results](https://github.com/anttiluode/Theorem/actions/runs/45044598034)
+- [Gate 007 CI results](https://github.com/anttiluode/Theorem/actions/runs/45047960483)
 
 ## Scientific boundaries
 
@@ -197,17 +223,15 @@ HeadAsResonator3's reference subtraction is a sensor-space operation and is **no
 
 ## Next actual research gate
 
-**Direct actuator-to-sensor feedthrough** is the next clear kill test. Even when the actuator enters the state accurately and the private sign is exogenous, a direct measurement path from action to sensor can produce
+**Make the sham imperfect, and make the instrument refuse when it cannot disambiguate.** Gate 007 shows that multi-lag impulse responses resolve a secretly shifted actuator or a memoryless sensor bypass under favorable invertible linear dynamics, but detector ringing remains an attribution problem. A separately measured sham fixes our synthetic examples **because** it is accurately coupled to the detector artifact.
 
-    measured_next = H*(latent + G*command) + C*command + sensor_noise
+A worthwhile next experiment is to hide the sham's gain/phase/latency; add action-dependent sensor feedthrough, sensor mixing and multiple independent detector artifacts; and ask whether a multi-channel calibration protocol can identify the correct component without being told which channel is trustworthy. On unseen worlds, score **unjustified physical claims and abstention** as well as location accuracy. Keep uncalibrated sham and memoryless-only assumptions as kill controls.
 
-so the causal input-to-measurement response is **H·G + C**, not H alone. A remote-looking sensor artifact C can create the appearance of a remote internal coupling while the intervention is genuinely randomized and the output is perfectly predicted.
+This is the direction toward a real instrument for investigating HeadAsResonator's reference/microphone/EEG relationships. Our archived overt-speech EEG is observational; it cannot automatically be treated as a randomized actuator experiment or converted into anatomical proof by these synthetic tests.
 
-A scientifically useful Gate 007 would compare the single-sensor result against an **independently calibrated actuator sensor**, a **sham/blank sensor that receives feedthrough but no world response**, or two separately varied input geometries. Require the falsely inferred remote link to disappear when the physically distinct path is constrained. This is particularly relevant to HeadAsResonator's uncertainty about skull, cable and reference pickup: it is the instrument's *causal geometry*, not its coherence alone, that must be identified.
+Claude's Luotain2 nonlinear blind-poly branch remains complementary: its exact Hermite corrected scoring uses a known Gaussian sensor variance R, whereas Theorem's active IV avoids R under a known actuation port and strong linear convolution assumptions. Both are useful, and neither solves the other's physical calibration problem.
 
-A separate branch with Claude's Luotain2 nonlinear blind search remains open: its Hermite-corrected score works with known independent Gaussian R, while Theorem 005–006 avoids needing R only under linear convolution and a valid private intervention. Neither result automatically solves the other's assumptions. Do not conflate these estimators.
-
-Until a real new method survives those physically grounded calibrations and a prior-art check, Theorem is a rigorously tested instrument, **not a claim to a universal new theorem**.
+**Theorem is not a claim to a novel universal theorem.** It is a battery of increasingly precise, falsifiable identifiability tests, with explicit negative controls and prior art.
 
 ## Prior art
 
