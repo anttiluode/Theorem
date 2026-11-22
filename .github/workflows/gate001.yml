@@ -1,0 +1,30 @@
+name: Theorem Gate 001 - Distinguishability under interventions
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  falsification:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install numeric dependencies
+        run: python -m pip install numpy pytest
+      - name: Run numerical and conceptual kill tests
+        run: python -m pytest -q
+      - name: Run frozen 30-seed two-domain experiment
+        run: python -m theorem_gate --out results --seeds 30 --trials 3000
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: theorem-gate-001-full-receipts
+          path: |
+            results/gate001.json
+            results/gate001.md
+          if-no-files-found: warn
