@@ -1,7 +1,7 @@
 """Falsification tests for the narrow linear identifiability certificate."""
 import numpy as np
 from theorem_gate import (
-    shadow,field,certificate,probe,predict_accuracy,simulate,
+    shadow,field,certificate,probe,accuracy,simulate,
     excitation_spectrum,run_experiment,
 )
 
@@ -72,8 +72,8 @@ def test_equal_energy_tangent_and_optimal_were_not_conflated():
         for k in ("tangent","random","dark_random","optimal"):
             v=probe(c,k,555)
             assert abs(np.linalg.norm(v)-1)<1e-12
-        assert predict_accuracy(c,probe(c,"tangent",555))==.5
-        assert predict_accuracy(c,probe(c,"optimal",555))>.70
+        assert accuracy(c,probe(c,"tangent",555))==.5
+        assert accuracy(c,probe(c,"optimal",555))>.70
 
 
 def test_gaussian_likelihood_calibration_independent_of_training():
@@ -82,7 +82,7 @@ def test_gaussian_likelihood_calibration_independent_of_training():
         for kind in ("optimal","random","tangent"):
             direction=probe(c,kind,130)
             empirical=simulate(c,direction,r,50000)
-            expected=predict_accuracy(c,direction)
+            expected=accuracy(c,direction)
             assert abs(empirical-expected)<.014,(c.name,kind,empirical,expected)
 
 
