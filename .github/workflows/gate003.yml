@@ -1,0 +1,34 @@
+name: Theorem Gate 003 - Blind active spatial operator reconstruction
+
+on:
+  push:
+    paths:
+      - 'blind_kernel_gate.py'
+      - 'tests/test_blind_kernel_gate.py'
+      - '.github/workflows/gate003.yml'
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  calibrated-inverse:
+    runs-on: ubuntu-latest
+    timeout-minutes: 9
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install minimal CPU requirements
+        run: python -m pip install numpy pytest
+      - name: Run known-waveform, blind-support and null tests
+        run: python -m pytest -q
+      - name: Freeze and evaluate twenty new seeds, three excitation designs
+        run: python -m blind_kernel_gate --seeds 20 --out results
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: theorem-gate-003-blind-operator-receipts
+          path: |
+            results/gate003.json
+            results/gate003.md
+          if-no-files-found: warn
