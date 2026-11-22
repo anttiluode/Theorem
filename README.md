@@ -83,7 +83,31 @@ The full **six-term spatial support** was recovered, including the **hidden (+17
 
 **What remains old/limited:** this is classical linear convolution identification, not a new theorem, not passive/unknown-input Luotain2, not nonlinear or multi-frame discovery, and not a medical EEG finding. The estimator has unusually favorable assumptions: exact input-output pairs, known shift invariance, and calibrated independent Gaussian measurement noise.
 
-## Reproduce all three gates
+## Gate 004 — Unknown remote address in a continuous, noisy world
+
+[**Full Gate 004 report**](GATE_004_REPORT.md) · [successful 30-test workflow](https://github.com/anttiluode/Theorem/actions/runs/45041594315) · [row-level experimental artifact](https://github.com/anttiluode/Theorem/actions/runs/45041594315/artifacts/14762031846) · [permanent compact summary](results/gate004_summary.json).
+
+This gate eliminates the static input/output reset of Gate 003. The world is a **continuously evolving 64×64 dynamical field** observed with independent sensor noise. The initial passive state has only one Fourier mode, so **64 different offset hypotheses are exactly equivalent** without further excitation. The agent sees only noisy state observations and chooses small action patterns; it **does not know which of 4096 offsets is true or whether any remote link exists**. It does know the local four-neighbor stencil, positive remote coupling strength 0.1, and the sensor-noise variance; those are strong family priors.
+
+With 24 passive steps followed by 16 equally powered interventions, on **40 fresh random hidden addresses**:
+
+| Policy | Passive correct | After 4 interventions | After 8 | After 16 |
+|---|---:|---:|---:|---:|
+| Passive / no disturbance | 3/40 | 1/40 | 1/40 | **1/40** |
+| Candidate-directed Fourier probe | 3/40 | 22/40 | 39/40 | **40/40** |
+| Random Fourier probe | 3/40 | 19/40 | 37/40 | **40/40** |
+| **Broadband white noise** | 3/40 | **32/40** | **40/40** | **40/40** |
+| Fixed familiar Fourier mode | 3/40 | 1/40 | 1/40 | 1/40 |
+
+**Important negative:** candidate-directed probing **did not beat white noise**. Broadband random excitation was more sample-efficient under the chosen budget. The result supports breaking a specific passive ambiguity, not a superiority claim for the adaptive frequency selector.
+
+**Noise correction was essential for false-link refusal.** On **40 separate no-link worlds**, the known-R-corrected learner reported no remote connection in **40/40** with either targeted or white probes after 16 actions. Under the **same observations**, falsely setting R=0 yielded **0/40 correct nulls**: the learner invented smoothing links. This mirrors Luotain2's earlier noise-induced wrong-law selection.
+
+An independent 20-seed process-disturbance sweep also shows that ongoing random environmental kicks can supply excitation without externally designed actions. Process SD 0.003 produced **18/20** passive exact addresses after 24 steps, versus **0/20** for SD 0, 0.0002 or 0.001. This sweep does not keep latent global power fixed, so its numerical transition is not comparable to the Fixed-R Gate IV-003 threshold or a universal law.
+
+All results are from a **synthetic known-family linear model** with one lag, known local dynamics and known remote coupling coefficient. This is not a solution to unknown-coefficient/multiple-lag/nonlinear blind law search, a general causal identifiability theorem, or real EEG.
+
+## Reproduce all four gates
 
 Requirements: **Python 3.10+**, NumPy and pytest. CPU only; no torch or GPU. On Windows you can use Python 3.13.
 
@@ -93,13 +117,15 @@ py -3.13 -m pytest -q
 py -3.13 -m theorem_gate --out results
 py -3.13 -m wormhole_gate --out results
 py -3.13 -m blind_kernel_gate --out results
+py -3.13 -m temporal_gate --out results
 ~~~
 
-Or use plain python on Linux/macOS. The three GitHub Actions workflows run all tests and archive complete seed-level JSON receipts:
+Or use plain python on Linux/macOS. The four GitHub Actions workflows run all tests and archive complete seed-level JSON receipts:
 
 - [Gate 001 CI results](https://github.com/anttiluode/Theorem/actions/runs/45038711769)
 - [Gate 002 CI results](https://github.com/anttiluode/Theorem/actions/runs/45039130421)
 - [Gate 003 CI results](https://github.com/anttiluode/Theorem/actions/runs/45039881706)
+- [Gate 004 CI results](https://github.com/anttiluode/Theorem/actions/runs/45041594315)
 
 ## Scientific boundaries
 
@@ -113,7 +139,7 @@ HeadAsResonator3's reference subtraction is a sensor-space operation and is **no
 
 ## Next actual research gate
 
-**Candidate-blind active temporal wormhole audit.** Gate 003 already recovers the remote address when source probing is controlled and the operator is known to be shift-invariant convolution. Now take two different multi-frame law candidates **proposed by the noisy Luotain2 learner**, never from the hidden generator. Compute a feasible phase-targeted probe *only from their disagreement*. Apply that probe to the synthetic world, or measure existing independent holdout trajectories that excite the predicted modes. Compare its ability to discriminate against equal-energy white noise, smooth noise, passive observation, and an intentionally wrong probe. Then evaluate whether the selected correct law generalizes to new seeds and **new random wormhole offsets**.
+**Unknown-law-family adaptive experiment.** Gate 004 now identifies a remote spatial address in a live dynamical field with controlled disturbances, but its learner is given the correct local stencil and remote coupling coefficient. Next, have noisy observations fit those **coefficients and rival structural supports without oracle templates**; then choose feasible probes among genuinely learned candidate laws, compare against white noise, and require calibrated refusal on no-link/correlated-noise cases. Compute a feasible phase-targeted probe *only from their disagreement*. Apply that probe to the synthetic world, or measure existing independent holdout trajectories that excite the predicted modes. Compare its ability to discriminate against equal-energy white noise, smooth noise, passive observation, and an intentionally wrong probe. Then evaluate whether the selected correct law generalizes to new seeds and **new random wormhole offsets**.
 
 That is where an original method might emerge. Until then, Theorem is an honest working instrument built on prior mathematics.
 
