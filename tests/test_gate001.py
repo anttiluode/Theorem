@@ -21,7 +21,7 @@ def test_optimal_input_has_right_singular_vector_certificate():
     for case in [shadow(),field()]:
         cert=certificate(case)
         assert cert["singular_residual"]<1e-12
-        assert cert["max_probe_separation"]>0
+        assert cert["max_output_separation"]>0
         optimum=cert["optimal_probe"]
         rng=np.random.default_rng(100)
         AminusB=case.A-case.B
@@ -72,7 +72,7 @@ def test_equal_energy_tangent_and_optimal_were_not_conflated():
         for k in ("tangent","random","dark_random","optimal"):
             v=probe(c,k,555)
             assert abs(np.linalg.norm(v)-1)<1e-12
-        assert accuracy(c,probe(c,"tangent",555))==.5
+        assert abs(accuracy(c,probe(c,"tangent",555))-.5)<1e-12
         assert accuracy(c,probe(c,"optimal",555))>.70
 
 
