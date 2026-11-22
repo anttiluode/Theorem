@@ -97,6 +97,26 @@ These findings have a practical consequence for the HeadAsResonator3 analogy: te
 
 **Unresolved next wall:** when the sham itself has unknown gain, phase or latency, or when the instrument mixes sensor coordinates or has several action-dependent bypass pathways, can a system infer the legitimate measurement geometry and **abstain when unidentifiable**? Retain the ideal white broadband baseline and strong null controls.
 
+### Gate 008: breaking a nonlinear equilibrium exposes both real and false curvature
+
+[Full preregistered report](GATE_008_REPORT.md) · [passing 72-test GitHub run](https://github.com/anttiluode/Theorem/actions/runs/45050940878) · [persistent 31-arm summary](results/gate008_summary.json) · [all per-case receipts](https://github.com/anttiluode/Theorem/actions/runs/45050940878/artifacts/14765286977).
+
+Claude's [Luotain2 estimated-R nonlinear gate](https://github.com/anttiluode/Luotain2/blob/main/ESTIMATED_R_GATE.md) showed that at low process excitation, Allen–Cahn law selection loses the physical diffusion/cubic reaction terms because the passive field sits near its phase equilibria. Theorem therefore tested a **new nonlinear intervention**, not another linear remote-link world.
+
+For a *uniform* s=±1 bulk equilibrium and F(v;s)=v+D Lap(v)+a(v-s)+r(v-v³), the response to accurately matched +u and −u interventions has an **even component -3*s*r*u²**, while the odd component contains D Lap(u), linear relaxation and r's linear/cubic odd effects. This symmetric finite-difference identity is elementary but allows a direct curvature-sensitive experiment with **no supplied sensor noise variance**.
+
+The strong limitation is the experimental setup: four pairs of independently prepared **identical equilibrium states**, with a known possible feature grammar and accurately measured intervention waveform. It is **not** fully blind Luotain2 identification from an unreset nonlinear time series.
+
+The fixed development method was evaluated on **40 previously untouched seeds 2001–2040** across six worlds and five equal-energy probe policies, plus a separate sensor-reference arm. The amplitude-capped targeted sparse probe detected the true Allen–Cahn cubic reaction **27/40** times, versus **1/40** with equally energetic white-noise pulses and **0/40** passively. Full Allen–Cahn support was exact **27/40** versus white **0/40**. Both white and targeted detected diffusion **40/40**, so the information gain was specifically in the nonlinear curvature. For two linear-only comparison worlds, the targeted test did not falsely detect a cubic reaction in any of 40 seeds; the targeted exact supports were diffusion-only **40/40**, phase-linear surrogate **37/40**, identity **40/40**.
+
+**Adversarial discovery:** even when the physical world was **linear diffusion only**, a deliberately nonlinear sensor produced an apparently significant cubic reaction in **21/40** targeted-probe worlds, versus 3/40 white. Thus an optimized intervention can amplify an external *detector artifact* just as effectively as a genuine internal nonlinearity. With a separately trusted linear reference channel, the same physical worlds yielded **0/40 false reactions** and **40/40 correct diffusion-only supports**. The reference is an extra idealized calibrated measurement, not a blind source inference.
+
+An improperly recorded, never-applied intervention waveform produced **0/40** correct cubic detections and **40/40 spurious linear-relaxation detections** in the true Allen–Cahn worlds. This is the nonlinear form of Theorem Gate 006/007's warning that a causal input-output relationship is not sufficient for correct physical attribution unless the actuation and measurement geometry is known.
+
+Prior art already covers optimal experiment design for nonlinear physical dynamics, symmetric finite-difference curvature and pulse perturbation at equilibria. **No newly proved theorem** is claimed.
+
+**Next direction:** real public data with repeatable controlled pulses, raw input timestamps and independently calibrated sensor/actuator path. Natural passive EEG and arbitrary physical wave traces do not automatically support this matched twin-state intervention protocol. Aim to make the instrument refuse when such calibration is absent, instead of moving to Gate 009 by inventing more favorable worlds.
+
 ## A genuinely interesting research question
 
 Can a learner obtain a reliable **candidate-specific excitation certificate without knowing which candidate is true**?
