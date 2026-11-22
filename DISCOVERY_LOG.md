@@ -35,6 +35,20 @@ This went beyond supplied-model discrimination. On the actual 64×64 Luotain2 wo
 
 This is **established Fourier linear system identification**, not a new theorem and not the original Luotain2 passive noisy time-delay problem. It does, however, give a concrete instrument for determining whether a supposedly invisible remote link can be made measurable by a feasible input change.
 
+### Gate 004: a dark world responds to a chosen kick, but white noise is better than our chooser
+
+[Detailed independent benchmark](GATE_004_REPORT.md) · [successful complete CI](https://github.com/anttiluode/Theorem/actions/runs/45041594315) · [permanent numeric receipt](results/gate004_summary.json).
+
+We made the spatial link **unknown among all 4,096 periodic offsets**, including the no-link hypothesis. The field runs continuously with **no reset inside a trajectory** and its passive state is restricted to a single spatial Fourier mode. Exactly **64 candidate offsets** are phase aliases and therefore passively identical on that initial mode. The agent receives noisy sensor readings and can inject equal-energy disturbances before the next update. It knows the local stencil, positive remote-link strength 0.1, and i.i.d. sensor variance—a deliberately narrow strong prior.
+
+Fresh seeds: 40 unknown remote addresses, 40 no-link worlds, and another 20 seeds across a process-disturbance sweep. After 24 passive frames followed by 16 chosen interventions, candidate-directed Fourier recovered **40/40** remote addresses versus **1/40** for passive observation. But crucially, **broadband white noise also recovered 40/40 and was faster** at four interventions (32/40 compared with targeted 22/40). The adaptive method is not yet superior to a sensible nonadaptive baseline.
+
+A separate **null failure boundary** emerged: after 16 actions, correcting the model comparison for independently calibrated input measurement noise chose no-link in **40/40** cases. Falsely setting measurement noise R to zero with otherwise matched observations yielded **0/40** correct nulls. Without correcting the operator-dependent input-noise penalty, the selector consistently invented smoothing connections. This is an empirical direct connection to Luotain2's previous noise-induced wrong-law selection, not a novel theory of inference.
+
+With independent ongoing process innovations of per-pixel SD 0.003, passive identification recovered 18/20 addresses after 24 steps; at 0, 0.0002 and 0.001 it recovered 0/20. The numerical transition depends on the simulator and does not preserve global latent power. Avoid treating it as a physical threshold or as equivalent to Luotain2's fixed-R/latent-power matched study.
+
+Gate 004 is stronger than Gate 003 because the simulator state evolves and the learner doesn't know the remote address. It is **still not open structural discovery**: local stencil, coefficient magnitude and one-lag form are supplied. It requires controlled action and known white sensor noise, neither of which exists automatically for real EEG or passive LLM text.
+
 ## A genuinely interesting research question
 
 Can a learner obtain a reliable **candidate-specific excitation certificate without knowing which candidate is true**?
