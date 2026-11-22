@@ -63,6 +63,20 @@ The cleanest result is therefore **unknown-R, unknown-weight system identificati
 
 A short-lag WAIVES-style variogram estimate of R was **not** smuggled in: process motion and measurement noise can both contribute to near-zero-lag variation, so R cannot universally be inferred without model and smoothness assumptions. Further gate tests should deliberately violate independent sensor noise, spatial shift invariance, single remote link and exact actuator access.
 
+### Gate 006: an estimator can be causally right and physically wrong
+
+[Full experiment and assumptions](GATE_006_REPORT.md) · [passing 49-test CI](https://github.com/anttiluode/Theorem/actions/runs/45044598034) · [permanent JSON receipt](results/gate006_summary.json).
+
+Theorem Gate 006 broke Gate 005's assumed ideal sensor and actuator separately. **Fresh private-sign randomized inputs stayed effective under AR(1) temporal sensor noise (rho=.85) and spatially correlated detector noise** in 40 new remote and 40 new null worlds per condition: 39–40/40 true remote addresses recovered, and 40/40 nulls refused in each sensor-noise arm. Autocorrelation is not the same thing as correlation with a *new random instrument*. This is a limited-sample success under exogenous noise, not guaranteed calibration of the spatial MAD threshold.
+
+Actuator-path changes were dramatically worse. An unknown physical spatial shift (+5,+7) of the commanded action made the **all-local, no-remote world look remotely connected in every one of 40 null trials**. The learned command-response operator has transfer H*G, and without actuator G calibration it is not necessarily the actual world H. In a shift-invariant field the equality H*shift(u)=shift(H)*u is exact for all input waveforms. This is a classic identifiability/factorization ambiguity: a causal IV is not a proof of the *material path* of the response.
+
+Other frozen results: unknown command gain .55 recovered only 15/40 weak remote addresses, with true local-weight MAE .0672 (versus .0046 baseline); additive independent actuator noise recovered 40/40; and an unknown one-frame actuator delay gave 0/40 with naive time alignment but **40/40** on the *same recordings* when the correct lag was supplied. The lag calibration was not discovered blindly. All stress rows, including failures, remain in the artifact.
+
+This exposes a direct methodological bridge to HeadAsResonator: a signal can have a real, reproducible, causally driven sensor relationship while its *physical route* remains unidentified. It does not establish that the EEG pickup followed an actuator, skull, cable, electrical-reference or neuronal route.
+
+**Next boundary:** a direct action-to-detector artifact C yields measured transfer H*G + C; even actuator calibration alone may be insufficient without a sensor sham/reference or multiple independently varied intervention channels. This is more scientifically urgent than increasing model complexity in a simulator with unvalidated ports.
+
 ## A genuinely interesting research question
 
 Can a learner obtain a reliable **candidate-specific excitation certificate without knowing which candidate is true**?
