@@ -63,7 +63,27 @@ The remote shift is exactly invisible when 17*ky−9*kx is divisible by 64, and 
 
 The stronger candidate-aware probe is obtained from the operator difference, not from a general preference for high frequencies. The weak/strong Fourier modes follow from standard mathematics.
 
-## Reproduce both gates
+## Gate 003 — Blindly recover the remote address, without an oracle support list
+
+[**Full method, results and limitations**](GATE_003_REPORT.md) · [Successful 21-test CI](https://github.com/anttiluode/Theorem/actions/runs/45039881706) · [Persistent numerical summary](results/gate003_summary.json) · [Full per-seed data](https://github.com/anttiluode/Theorem/actions/runs/45039881706/artifacts/14760799250).
+
+This gate closes the first two gates' obvious loophole: **we no longer tell the estimator where the wormhole is**. It receives a set of controlled input spatial fields, their noisy output fields, and the assumed Gaussian sensor-noise standard deviation. It knows only that the unknown operator is *linear and translation-invariant* on a periodic 64×64 field—not its number of spatial links, offsets or coefficients. Complex Fourier cross-spectrum inversion reconstructs the impulse response and a fixed noise-calibrated threshold selects its significant spatial offsets.
+
+At matched input energy and fixed absolute sensor noise, on **20 new seeds**:
+
+| Number of input/output probe pairs | Smoothed random | White random | Exact flat-spectrum random |
+|---:|---:|---:|---:|
+| 8 | 0/20 | 0/20 | 0/20 |
+| 24 | 0/20 | 10/20 | **11/20** |
+| **48** | **0/20** | 19/20 | **20/20** |
+
+The full **six-term spatial support** was recovered, including the **hidden (+17,−9) link**. A no-law null yielded **0 false-positive trials in 60** runs. Smooth probes illuminated only ~3.5% of observable frequency bins; white and flat-spectrum probes covered essentially all of them.
+
+**What has actually advanced:** active phase-preserving measurements can recover an unknown distant spatial coupling using an explicitly calibrated, physically interpretable estimator. This is an empirical success on the **actual Luotain2 synthetic wormhole law**, not simply pairwise discrimination with given alternatives.
+
+**What remains old/limited:** this is classical linear convolution identification, not a new theorem, not passive/unknown-input Luotain2, not nonlinear or multi-frame discovery, and not a medical EEG finding. The estimator has unusually favorable assumptions: exact input-output pairs, known shift invariance, and calibrated independent Gaussian measurement noise.
+
+## Reproduce all three gates
 
 Requirements: **Python 3.10+**, NumPy and pytest. CPU only; no torch or GPU. On Windows you can use Python 3.13.
 
@@ -72,12 +92,14 @@ py -3.13 -m pip install numpy pytest
 py -3.13 -m pytest -q
 py -3.13 -m theorem_gate --out results
 py -3.13 -m wormhole_gate --out results
+py -3.13 -m blind_kernel_gate --out results
 ~~~
 
-Or use plain python on Linux/macOS. The two GitHub Actions workflows run all tests and archive complete seed-level JSON receipts:
+Or use plain python on Linux/macOS. The three GitHub Actions workflows run all tests and archive complete seed-level JSON receipts:
 
 - [Gate 001 CI results](https://github.com/anttiluode/Theorem/actions/runs/45038711769)
 - [Gate 002 CI results](https://github.com/anttiluode/Theorem/actions/runs/45039130421)
+- [Gate 003 CI results](https://github.com/anttiluode/Theorem/actions/runs/45039881706)
 
 ## Scientific boundaries
 
@@ -91,7 +113,7 @@ HeadAsResonator3's reference subtraction is a sensor-space operation and is **no
 
 ## Next actual research gate
 
-**Candidate-blind active wormhole audit.** Take two different law candidates **proposed by the noisy Luotain2 learner**, never from the hidden generator. Compute a feasible phase-targeted probe *only from their disagreement*. Apply that probe to the synthetic world, or measure existing independent holdout trajectories that excite the predicted modes. Compare its ability to discriminate against equal-energy white noise, smooth noise, passive observation, and an intentionally wrong probe. Then evaluate whether the selected correct law generalizes to new seeds and **new random wormhole offsets**.
+**Candidate-blind active temporal wormhole audit.** Gate 003 already recovers the remote address when source probing is controlled and the operator is known to be shift-invariant convolution. Now take two different multi-frame law candidates **proposed by the noisy Luotain2 learner**, never from the hidden generator. Compute a feasible phase-targeted probe *only from their disagreement*. Apply that probe to the synthetic world, or measure existing independent holdout trajectories that excite the predicted modes. Compare its ability to discriminate against equal-energy white noise, smooth noise, passive observation, and an intentionally wrong probe. Then evaluate whether the selected correct law generalizes to new seeds and **new random wormhole offsets**.
 
 That is where an original method might emerge. Until then, Theorem is an honest working instrument built on prior mathematics.
 
