@@ -1,0 +1,37 @@
+name: Theorem Gate 007 - Multilag echoes and independent sham sensor
+
+on:
+  push:
+    paths:
+      - 'multilag_gate.py'
+      - 'tests/test_multilag_gate.py'
+      - '.github/workflows/gate007.yml'
+  workflow_dispatch:
+
+jobs:
+  multi-lag-attribution:
+    runs-on: ubuntu-latest
+    timeout-minutes: 16
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install numpy pytest
+      - name: All scientific and numerical falsification tests
+        run: python -m pytest -q
+      - name: Development smoke gate without changing frozen parameters
+        run: python -m multilag_gate --quick --out results/smoke007
+      - name: Frozen 20-plus-20 unseen remote and null multi-lag sweep
+        run: python -m multilag_gate --out results
+      - name: Archive all per-seed receipts, failures and controls
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: theorem-gate007-multilag-sham-receipts
+          path: |
+            results/gate007.json
+            results/gate007.md
+            results/smoke007/gate007.json
+            results/smoke007/gate007.md
+          if-no-files-found: warn
