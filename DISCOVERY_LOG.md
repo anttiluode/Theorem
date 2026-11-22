@@ -77,6 +77,26 @@ This exposes a direct methodological bridge to HeadAsResonator: a signal can hav
 
 **Next boundary:** a direct action-to-detector artifact C yields measured transfer H*G + C; even actuator calibration alone may be insufficient without a sensor sham/reference or multiple independently varied intervention channels. This is more scientifically urgent than increasing model complexity in a simulator with unvalidated ports.
 
+### Gate 007: additional echoes rescue some false sources, but may leave attribution undecidable
+
+[Complete 59-test experimental report](GATE_007_REPORT.md) · [verified GitHub run](https://github.com/anttiluode/Theorem/actions/runs/45047960483) · [permanent full table](results/gate007_summary.json).
+
+Neon's correction to Gate 006 was mathematically valuable: a single-lag command response confounds the world with the unknown actuator, but **two consecutive responses can cancel an invertible actuator**. In our causal convention, R1=HG and R2=H²G imply R2/R1=H. A direct *memoryless* sensor bypass D enters R1 but not later echoes, so R3/R2 can likewise recover H. Both are standard Markov-parameter results, not new theory.
+
+We froze and ran **five distinct instrument pathways** in 64×64 continuing linear field simulations, with 20 new true-remote and 20 no-link seed evaluations per pathway; 256 new independently randomized white commands in each trajectory. The single-echo method invented 20/20 false remote links in no-link worlds when an actuator shifted the input or when a sensor bypass fed directly to the electrode-like detector. The correct echo ratios removed those false claims in **20/20** cases for the shifted actuator and memoryless bypass; the actual real remote address was also recovered in 20/20.
+
+**Ringing changed the answer.** In the matched-ringing sensor case K=H, later R2/R1 and R3/R2 ratios still reported **20/20** and **19/20 false physical links**, respectively, in the no-link worlds, despite the *exact* noiseless ratios being equal to H. The estimated transfer can be partly canceled in individual modes, creating an unstable noisy inverse and a spurious spatial support decision. For a distinct ringing dynamics K=0.55I, the two ratios also gave 20/20 false physical links. Thus noiseless identifiability and a finite-sample reliable estimator are separate issues.
+
+The **independently instrumented, correctly wired sham channel** measures the direct detector bypass z while omitting the true latent world x. Subtracting its response restored **20/20 correct no-link refusals and 20/20 true remote addresses in every pathway**, with the same spatial-MAD detector. Subtracting an unrelated fake-sham noise channel did not rescue the bypass cases. This is a controlled *extra measurement*, not a magic postprocessing trick: exact sham coupling, gain and timing are granted by the simulator and would have to be verified with actual instruments.
+
+An even stricter **exact indistinguishability** remains: if sensor ringing K=H, the complete primary impulse sequence R_l=H^l(G+H^-1D) is mathematically identical to an alternative model with no sensor bypass and a different actuator. A lone output channel cannot uniquely label the physical entry path without constraining either G or D. A known actuator or an independent sham is one way to break that ambiguity. The sham is **not the only possible identifying intervention**.
+
+Separately, an unknown sensor spatial basis C makes observed dynamics C H C^-1. A small exact 8×8-grid permutation example turned a truly local graph (0 long-range physical connections) into **242 apparent long-range connections in sensor coordinates** while preserving measured trajectories and eigenvalues. It is an exact similarity transform, not a claim that the transformed operator remains spatially shift invariant.
+
+These findings have a practical consequence for the HeadAsResonator3 analogy: temporal signal transfer, coherence and even good causal interventions are insufficient to label a detected source as brain, skull, muscle, cable or amplifier without measurement-port calibration. The **public EEG results were passive and did not contain the randomized interventions or sham calibration** used here. Gate 007 does not retroactively identify those sources.
+
+**Unresolved next wall:** when the sham itself has unknown gain, phase or latency, or when the instrument mixes sensor coordinates or has several action-dependent bypass pathways, can a system infer the legitimate measurement geometry and **abstain when unidentifiable**? Retain the ideal white broadband baseline and strong null controls.
+
 ## A genuinely interesting research question
 
 Can a learner obtain a reliable **candidate-specific excitation certificate without knowing which candidate is true**?
