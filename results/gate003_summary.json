@@ -1,0 +1,113 @@
+{
+  "experiment": "Theorem Gate 003 — true wormhole offset withheld, fixed sensor-noise FFT inversion",
+  "date": "2026-11-22",
+  "status": "success",
+  "tests_passed": 21,
+  "workflow": "https://github.com/anttiluode/Theorem/actions/runs/45039881706",
+  "complete_artifact": "https://github.com/anttiluode/Theorem/actions/runs/45039881706/artifacts/14760799250",
+  "protocol": "https://github.com/anttiluode/Theorem/blob/main/GATE_003_REPORT.md",
+  "law_source": "https://github.com/anttiluode/Luotain2/blob/main/luotain2/worlds.py",
+  "model_family_given_to_solver": "periodic 2D shift-invariant linear convolution",
+  "true_support_and_number_given_to_solver": false,
+  "known_sensor_noise_sd": 0.08,
+  "spatial_field": [
+    64,
+    64
+  ],
+  "sources_per_trial": [
+    8,
+    24,
+    48
+  ],
+  "seeds": "801–820",
+  "input_norm": 1,
+  "confidence_cutoff": "Gaussian FWER upper-bound alpha=0.05; correlated observation noise not supported",
+  "results": [
+    {
+      "probes": 8,
+      "kind": "smooth",
+      "exact": 0,
+      "remote_recovered": 0,
+      "trials": 20,
+      "spectral_fraction_rounded": 0.034
+    },
+    {
+      "probes": 8,
+      "kind": "white",
+      "exact": 0,
+      "remote_recovered": 1,
+      "trials": 20,
+      "spectral_fraction_rounded": 1
+    },
+    {
+      "probes": 8,
+      "kind": "flat_spectrum",
+      "exact": 0,
+      "remote_recovered": 2,
+      "trials": 20,
+      "spectral_fraction_rounded": 1
+    },
+    {
+      "probes": 24,
+      "kind": "smooth",
+      "exact": 0,
+      "remote_recovered": 0,
+      "trials": 20,
+      "spectral_fraction_rounded": 0.035
+    },
+    {
+      "probes": 24,
+      "kind": "white",
+      "exact": 10,
+      "remote_recovered": 18,
+      "trials": 20,
+      "spectral_fraction_rounded": 1
+    },
+    {
+      "probes": 24,
+      "kind": "flat_spectrum",
+      "exact": 11,
+      "remote_recovered": 18,
+      "trials": 20,
+      "spectral_fraction_rounded": 1
+    },
+    {
+      "probes": 48,
+      "kind": "smooth",
+      "exact": 0,
+      "remote_recovered": 0,
+      "trials": 20,
+      "spectral_fraction_rounded": 0.035
+    },
+    {
+      "probes": 48,
+      "kind": "white",
+      "exact": 19,
+      "remote_recovered": 20,
+      "trials": 20,
+      "spectral_fraction_rounded": 1
+    },
+    {
+      "probes": 48,
+      "kind": "flat_spectrum",
+      "exact": 20,
+      "remote_recovered": 20,
+      "trials": 20,
+      "spectral_fraction_rounded": 1
+    }
+  ],
+  "null": {
+    "false_positive_trials": 0,
+    "total": 60
+  },
+  "conclusion": "Complete six-term spatial convolution kernel including (+17,-9) remote link was recovered 20/20 at 48 flat-spectrum equal-energy probes and 19/20 at white noise, versus 0/20 at smooth probes. The null produced no false-positive trials out of 60.",
+  "qualifications": [
+    "Standard complex cross-spectrum inversion, not a novel theorem",
+    "The solver assumes spatially shift-invariant linear model and known measurement noise",
+    "Source inputs are experimentally controlled; not passive EEG",
+    "No time-lag, nonlinear Burgers/Allen-Cahn, correlated noise, unknown system class",
+    "Small synthetic fixed family and 20 seeds, 48 source-response pairs per case",
+    "Success says nothing about actual model collapse or real transformer mechanistic interpretation"
+  ],
+  "precision_notice": "All reported counts and rounded observable fractions transcribed from successful GitHub Actions log. Complete row-level receipts in artifact."
+}
