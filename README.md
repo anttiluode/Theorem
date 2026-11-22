@@ -107,7 +107,33 @@ An independent 20-seed process-disturbance sweep also shows that ongoing random 
 
 All results are from a **synthetic known-family linear model** with one lag, known local dynamics and known remote coupling coefficient. This is not a solution to unknown-coefficient/multiple-lag/nonlinear blind law search, a general causal identifiability theorem, or real EEG.
 
-## Reproduce all four gates
+## Gate 005 — Unknown coefficients and R: private interventions as instruments
+
+[**Gate 005 full real protocol and report**](GATE_005_REPORT.md) · [source](active_iv_gate.py) · [frozen protocol](GATE_005_PROTOCOL.md) · [passing 40-test CI](https://github.com/anttiluode/Theorem/actions/runs/45043279743) · [permanent numerical summary](results/gate005_summary.json) · [complete seed-level results](https://github.com/anttiluode/Theorem/actions/runs/45043279743/artifacts/14762816341).
+
+This gate removes Gate 004's *known local coefficients, known remote-link strength and known sensor-noise variance*. Each continuous 64×64 simulator world has a randomly sampled local kernel, an optional remote link with unknown positive/negative weight and address, and a random sensor-noise SD. The estimator still assumes a **linear sparse translation-invariant spatial operator and a known additive actuation port**, so it is not model-free causal discovery.
+
+The critical experimental detail: **a known action is not automatically a valid instrument**. An action selected from the current noisy observation inherits dependence on that measurement. We use a fresh independent **private ± sign** *after* determining each action's spatial shape. This supplies an exogenous instrument under the simulator's explicit noise/feedback assumptions. Cross-spectrum inversion of the actual action against the next measured frame estimates the **unknown full spatial kernel without supplying R**; candidate remote support must replicate on separate intervention records.
+
+On the **harder, frozen 40-remote/40-no-link seed sets**, with weaker remote links and higher unannounced sensor noise:
+
+| Policy (equal action energy) | Exact remote recovered | No-link correctly rejected |
+|---|---:|---:|
+| **White broadband private kicks** | **40/40** | **40/40** |
+| White → targeted hybrid private kicks | 36/40 | 40/40 |
+| Random single Fourier frequency | 0/40 | 40/40 |
+| Deterministic feedback, not a valid IV by default | 33/40 | 40/40 |
+| Mispaired never-applied placebo instrument | 0/40 | 40/40 |
+
+Broadband **white noise still won** at final recovery. The hybrid was slightly ahead at 12 and 16 actions, but finished worse (36/40 versus 40/40). No two-phase optimality theorem is established.
+
+The local coefficient estimation error makes the exogeneity concern tangible: weak-regime five-weight MAE was **0.0062** under private white probes, but **0.0310** with deterministic noisy feedback, despite the latter often guessing the right remote address. The null refusal is a result of these simulated worlds and an exploratory **spatial MAD threshold**, **not** a calibrated family-wise false-discovery rate.
+
+The WAIVES variogram idea was *not* used to manufacture an unknown-R estimate: without additional assumptions, temporal increments mix sensor noise and real process change. This experiment avoids needing R by using independent intervention inputs, rather than claiming R can always be read off a noise-floor plot.
+
+**Boundary:** still assumes controllable random excitation, a known spatially shift-invariant linear model class and local support region, independent sensor errors and an exact action-to-state port. Colored noise, nonlinear/multi-lag dynamics and nonideal actuation are untested.
+
+## Reproduce all five gates
 
 Requirements: **Python 3.10+**, NumPy and pytest. CPU only; no torch or GPU. On Windows you can use Python 3.13.
 
@@ -118,14 +144,16 @@ py -3.13 -m theorem_gate --out results
 py -3.13 -m wormhole_gate --out results
 py -3.13 -m blind_kernel_gate --out results
 py -3.13 -m temporal_gate --out results
+py -3.13 -m active_iv_gate --out results
 ~~~
 
-Or use plain python on Linux/macOS. The four GitHub Actions workflows run all tests and archive complete seed-level JSON receipts:
+Or use plain python on Linux/macOS. The five GitHub Actions workflows run all tests and archive complete seed-level JSON receipts:
 
 - [Gate 001 CI results](https://github.com/anttiluode/Theorem/actions/runs/45038711769)
 - [Gate 002 CI results](https://github.com/anttiluode/Theorem/actions/runs/45039130421)
 - [Gate 003 CI results](https://github.com/anttiluode/Theorem/actions/runs/45039881706)
 - [Gate 004 CI results](https://github.com/anttiluode/Theorem/actions/runs/45041594315)
+- [Gate 005 CI results](https://github.com/anttiluode/Theorem/actions/runs/45043279743)
 
 ## Scientific boundaries
 
@@ -139,7 +167,7 @@ HeadAsResonator3's reference subtraction is a sensor-space operation and is **no
 
 ## Next actual research gate
 
-**Unknown-law-family adaptive experiment.** Gate 004 now identifies a remote spatial address in a live dynamical field with controlled disturbances, but its learner is given the correct local stencil and remote coupling coefficient. Next, have noisy observations fit those **coefficients and rival structural supports without oracle templates**; then choose feasible probes among genuinely learned candidate laws, compare against white noise, and require calibrated refusal on no-link/correlated-noise cases. Compute a feasible phase-targeted probe *only from their disagreement*. Apply that probe to the synthetic world, or measure existing independent holdout trajectories that excite the predicted modes. Compare its ability to discriminate against equal-energy white noise, smooth noise, passive observation, and an intentionally wrong probe. Then evaluate whether the selected correct law generalizes to new seeds and **new random wormhole offsets**.
+**Break the remaining favorable assumptions.** Gate 005 now recovers unknown spatial coupling coefficients and an unknown remote address with no supplied sensor-noise variance—but it still has a precise spatial convolution/actuation model, full-field observations and genuinely independent private kicks. Next, test delayed and colored sensor noise, multiple remote links, unknown input gain, nonlinear state transitions, and a calibrated refusal criterion. Keep broadband white as the strong baseline; the two-phase controller has not beaten it. Compute a feasible phase-targeted probe *only from their disagreement*. Apply that probe to the synthetic world, or measure existing independent holdout trajectories that excite the predicted modes. Compare its ability to discriminate against equal-energy white noise, smooth noise, passive observation, and an intentionally wrong probe. Then evaluate whether the selected correct law generalizes to new seeds and **new random wormhole offsets**.
 
 That is where an original method might emerge. Until then, Theorem is an honest working instrument built on prior mathematics.
 
