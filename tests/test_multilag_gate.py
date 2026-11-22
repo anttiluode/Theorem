@@ -31,8 +31,8 @@ def test_true_lagged_cross_transfer_on_explicit_single_command():
     rng=np.random.default_rng(22)
     h,_=kernel(rng,False)
     H=np.fft.fft2(h)
-    U=np.zeros((8,N,N),complex)
-    Y=np.zeros((8,N,N),complex)
+    U=np.zeros((20,N,N),complex)
+    Y=np.zeros((20,N,N),complex)
     u=rng.normal(size=(N,N))
     U[0]=np.fft.fft2(u)
     Y[0]=H*U[0]
@@ -40,7 +40,7 @@ def test_true_lagged_cross_transfer_on_explicit_single_command():
     Y[2]=H**3*U[0]
     for lag in (1,2,3):
         # With only one nonzero command, the full cross-moment is exact.
-        out=cross_transfer(U,Y,lag,0,8)
+        out=cross_transfer(U,Y,lag,0,20)
         assert np.max(abs(out-H**lag))<1e-11
 
 
