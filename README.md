@@ -133,7 +133,35 @@ The WAIVES variogram idea was *not* used to manufacture an unknown-R estimate: w
 
 **Boundary:** still assumes controllable random excitation, a known spatially shift-invariant linear model class and local support region, independent sensor errors and an exact action-to-state port. Colored noise, nonlinear/multi-lag dynamics and nonideal actuation are untested.
 
-## Reproduce all five gates
+## Gate 006 — The false connection was in the actuator
+
+[**Gate 006 complete report**](GATE_006_REPORT.md) · [frozen protocol](GATE_006_PROTOCOL.md) · [source](sensor_port_gate.py) · [successful 49-test CI and 40-seed sweep](https://github.com/anttiluode/Theorem/actions/runs/45044598034) · [all per-seed receipts](https://github.com/anttiluode/Theorem/actions/runs/45044598034/artifacts/14762208996) · [permanent numerical summary](results/gate006_summary.json).
+
+**The critical new finding is a carefully controlled *negative* physical attribution test.** When the real world contained **no distant spatial connection**, but its *actuator* secretly shifted every commanded intervention by (+5,+7), the active-IV estimator reported a false remote link in **all 40 of 40 no-link worlds**. The estimator was recovering the **composite command-to-observation transfer**, not necessarily the internal physical-world operator.
+
+In a spatial convolution model, a world kernel H and uncalibrated actuator kernel G yield intervention response **H·G** in Fourier coordinates. A pure actuator shift can make a world with only local coupling look like it has a long-range internal shortcut. No amount of private-sign independence alone resolves the physical factorization. This is established system identification mathematics, not a newly proved theorem.
+
+Same fixed energy, same 40 new remote and 40 new no-link seeds per condition, the same unknown kernel coefficients and sensor R as Gate 005:
+
+| Stress condition | True remote recovered | No-link correctly refused |
+|---|---:|---:|
+| Independent sensor noise, ideal actuator | **40/40** | **40/40** |
+| Temporal AR sensor noise, rho 0.85 | 39/40 | 40/40 |
+| Spatially correlated sensor noise | 40/40 | 40/40 |
+| Both temporal + spatial sensor correlations | 39/40 | 40/40 |
+| Independent unmeasured actuator noise | 40/40 | 40/40 |
+| Unknown actuator gain 0.55× | **15/40** | 40/40 |
+| **Unknown actuator spatial shift (+5,+7)** | **0/40** | **0/40 (40 false links)** |
+| Unknown one-frame actuation delay, wrong lag | 0/40 | 40/40 |
+| **Same delayed recording, correct lag supplied** | **40/40** | **40/40** |
+
+This is an explicit correction to the suggestion that **temporally correlated sensor noise automatically invalidates private-action IV**. It does not: a new private sign can remain conditionally orthogonal to future correlated sensor noise, although finite-sample confidence and variance can suffer. **Physical port calibration** was the much more dangerous obstacle here.
+
+Unknown gain biased the internal weight estimates (mean local MAE 0.0672 instead of 0.0046). A wrong one-frame lag erased all 40 remote detections; externally supplying the correct lag to the *same recordings* restored 40/40. **The lag was not learned blindly.**
+
+**Limits:** these are synthetic worlds with a full-field sensor, one optional remote link, sparse linear spatial convolution and an exploratory non-FWER-corrected remote coefficient threshold. The 40/40 successes and failures are sample counts, not universal guarantees; they cannot locate brain, skull or cable sources from EEG.
+
+## Reproduce all six gates
 
 Requirements: **Python 3.10+**, NumPy and pytest. CPU only; no torch or GPU. On Windows you can use Python 3.13.
 
@@ -145,15 +173,17 @@ py -3.13 -m wormhole_gate --out results
 py -3.13 -m blind_kernel_gate --out results
 py -3.13 -m temporal_gate --out results
 py -3.13 -m active_iv_gate --out results
+py -3.13 -m sensor_port_gate --out results
 ~~~
 
-Or use plain python on Linux/macOS. The five GitHub Actions workflows run all tests and archive complete seed-level JSON receipts:
+Or use plain python on Linux/macOS. The six GitHub Actions workflows run all tests and archive complete seed-level JSON receipts:
 
 - [Gate 001 CI results](https://github.com/anttiluode/Theorem/actions/runs/45038711769)
 - [Gate 002 CI results](https://github.com/anttiluode/Theorem/actions/runs/45039130421)
 - [Gate 003 CI results](https://github.com/anttiluode/Theorem/actions/runs/45039881706)
 - [Gate 004 CI results](https://github.com/anttiluode/Theorem/actions/runs/45041594315)
 - [Gate 005 CI results](https://github.com/anttiluode/Theorem/actions/runs/45043279743)
+- [Gate 006 CI results](https://github.com/anttiluode/Theorem/actions/runs/45044598034)
 
 ## Scientific boundaries
 
@@ -167,9 +197,17 @@ HeadAsResonator3's reference subtraction is a sensor-space operation and is **no
 
 ## Next actual research gate
 
-**Break the remaining favorable assumptions.** Gate 005 now recovers unknown spatial coupling coefficients and an unknown remote address with no supplied sensor-noise variance—but it still has a precise spatial convolution/actuation model, full-field observations and genuinely independent private kicks. Next, test delayed and colored sensor noise, multiple remote links, unknown input gain, nonlinear state transitions, and a calibrated refusal criterion. Keep broadband white as the strong baseline; the two-phase controller has not beaten it. Compute a feasible phase-targeted probe *only from their disagreement*. Apply that probe to the synthetic world, or measure existing independent holdout trajectories that excite the predicted modes. Compare its ability to discriminate against equal-energy white noise, smooth noise, passive observation, and an intentionally wrong probe. Then evaluate whether the selected correct law generalizes to new seeds and **new random wormhole offsets**.
+**Direct actuator-to-sensor feedthrough** is the next clear kill test. Even when the actuator enters the state accurately and the private sign is exogenous, a direct measurement path from action to sensor can produce
 
-That is where an original method might emerge. Until then, Theorem is an honest working instrument built on prior mathematics.
+    measured_next = H*(latent + G*command) + C*command + sensor_noise
+
+so the causal input-to-measurement response is **H·G + C**, not H alone. A remote-looking sensor artifact C can create the appearance of a remote internal coupling while the intervention is genuinely randomized and the output is perfectly predicted.
+
+A scientifically useful Gate 007 would compare the single-sensor result against an **independently calibrated actuator sensor**, a **sham/blank sensor that receives feedthrough but no world response**, or two separately varied input geometries. Require the falsely inferred remote link to disappear when the physically distinct path is constrained. This is particularly relevant to HeadAsResonator's uncertainty about skull, cable and reference pickup: it is the instrument's *causal geometry*, not its coherence alone, that must be identified.
+
+A separate branch with Claude's Luotain2 nonlinear blind search remains open: its Hermite-corrected score works with known independent Gaussian R, while Theorem 005–006 avoids needing R only under linear convolution and a valid private intervention. Neither result automatically solves the other's assumptions. Do not conflate these estimators.
+
+Until a real new method survives those physically grounded calibrations and a prior-art check, Theorem is a rigorously tested instrument, **not a claim to a universal new theorem**.
 
 ## Prior art
 
