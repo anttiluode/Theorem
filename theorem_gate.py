@@ -32,7 +32,7 @@ def shadow(n=8, j=3):
 
 
 def field(n=16):
-    a=.70*np.eye(n)+.15*np.roll(np.eye(n),1,axis=0)+.15*np.roll(np.eye(n),-1,axis=0)
+    a=.50*np.eye(n)+.20*np.roll(np.eye(n),1,axis=0)+.20*np.roll(np.eye(n),-1,axis=0)
     v=(-1.)**np.arange(n)/sqrt(n)
     b=a+.70*np.outer(v,v)
     theta=np.arange(n)*2*np.pi/n
