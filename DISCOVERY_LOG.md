@@ -49,6 +49,20 @@ With independent ongoing process innovations of per-pixel SD 0.003, passive iden
 
 Gate 004 is stronger than Gate 003 because the simulator state evolves and the learner doesn't know the remote address. It is **still not open structural discovery**: local stencil, coefficient magnitude and one-lag form are supplied. It requires controlled action and known white sensor noise, neither of which exists automatically for real EEG or passive LLM text.
 
+### Gate 005: corrected IV exogeneity and the weaker two-phase claim
+
+[Full report](GATE_005_REPORT.md) · [passing GitHub Actions](https://github.com/anttiluode/Theorem/actions/runs/45043279743) · [persisted JSON summary](results/gate005_summary.json).
+
+Neon's proposed connection to active instrumental variables had a crucial **causal timing qualification**: knowing the intervention's precise waveform does not make it exogenous when it is selected deterministically from a noisy state. The model uses fresh private Rademacher randomization **after** choosing a spatial action shape. Conditional on the previous measurements/latent state, the signed action has expectation zero and the next output receives a causal operator response to that action. Its cross-spectral moment therefore identifies the linear convolution kernel under independent future noise without needing sensor-noise variance R.
+
+The simulator still gives the learner the shift-invariant linear family, a perfectly known additive actuation port, and a sparse/locality prior; it withholds **all actual stencil weights, the remote location/strength/sign and realized R**. The estimator fits the entire spatial kernel from action-next-measurement moments, using a spatial-MAD coefficient threshold and non-overlapping first/second action blocks to filter discoveries. These blocks are *not unconditionally independent* in an adaptive closed-loop run; future actions and states depend on earlier data. Fresh private random signs support the conditional moment, not a claim of formally independent trials or calibrated p-values.
+
+On the separate hard 40 remote / 40 no-link holdout, broadband private white kicks recovered **40/40** remote addresses and correctly refused **40/40** no-link worlds. The two-phase broadband→targeted controller recovered **36/40**, worse than white; it was slightly ahead only at 12/16 actions and that exploratory comparison is not statistically decisive. Narrowband and mispaired placebo action records recovered **0/40** links. Deterministic noisy feedback recovered **33/40** addresses but had substantially worse local coefficient MAE (**~0.031 vs ~0.006** for white), showing that classification success can coexist with biased mechanism estimation.
+
+The cleanest result is therefore **unknown-R, unknown-weight system identification using independent private excitation in a restricted linear convolutional model**. That is established IV/active system identification deployed as a reproducible new engineering gate, **not a mathematical discovery**. The proposed targeted information-efficiency advantage still has not survived a strong broadband baseline.
+
+A short-lag WAIVES-style variogram estimate of R was **not** smuggled in: process motion and measurement noise can both contribute to near-zero-lag variation, so R cannot universally be inferred without model and smoothness assumptions. Further gate tests should deliberately violate independent sensor noise, spatial shift invariance, single remote link and exact actuator access.
+
 ## A genuinely interesting research question
 
 Can a learner obtain a reliable **candidate-specific excitation certificate without knowing which candidate is true**?
