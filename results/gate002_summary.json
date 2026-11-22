@@ -1,0 +1,53 @@
+{
+  "gate": "002",
+  "status": "passed",
+  "date": "2026-11-22",
+  "synthetic_only": true,
+  "workflow": "https://github.com/anttiluode/Theorem/actions/runs/45039130421",
+  "complete_artifact": "https://github.com/anttiluode/Theorem/actions/runs/45039130421/artifacts/14760861573",
+  "tests_passed_in_run": 13,
+  "source_law": "anttiluode/Luotain2/luotain2/worlds.py make_world('wormhole') remote (+17,-9), coefficient .1",
+  "competing_hypothesis": "specified local-only substitute, NOT the learned wrong autoregressive law",
+  "lattice": {
+    "n": 64,
+    "total_fourier_coordinates": 4096,
+    "dark": 64,
+    "maximal_bright": 64
+  },
+  "seeds": "701–730",
+  "trials_per_seed_per_probe": 3000,
+  "results": [
+    {
+      "probe": "exact dark (ky=9,kx=17)",
+      "mean_output_separation": 0,
+      "predicted_accuracy": 0.5,
+      "empirical_accuracy": 0.499
+    },
+    {
+      "probe": "near dark (ky=1,kx=2)",
+      "mean_output_separation": 0.00589,
+      "predicted_accuracy": 0.529,
+      "empirical_accuracy": 0.532
+    },
+    {
+      "probe": "lowpass random",
+      "mean_output_separation": 0.084,
+      "predicted_accuracy": 0.852,
+      "empirical_accuracy": 0.854
+    },
+    {
+      "probe": "white random",
+      "mean_output_separation": 0.08499,
+      "predicted_accuracy": 0.856,
+      "empirical_accuracy": 0.856
+    },
+    {
+      "probe": "bright (ky=0,kx=32)",
+      "mean_output_separation": 0.12,
+      "predicted_accuracy": 0.933,
+      "empirical_accuracy": 0.933
+    }
+  ],
+  "formula": "gain(ky,kx)=0.2*abs(sin(pi*(17*ky-9*kx)/64))",
+  "limitations": "Given true and rival operators; no blind discovery, no IV/WAIVES, independent Gaussian output noise, synthetic single-step field."
+}
