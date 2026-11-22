@@ -51,7 +51,7 @@ For ringing K≠H, neither ratio necessarily equals H, and a sham can recover th
 - Development seeds 701–703 and 801–803 were used to check script behavior at 128 actions.
 - **Unseen remote worlds:** seeds 7101–7120, 20 per physical case.
 - **Unseen no-link worlds:** seeds 8101–8120, 20 per physical case.
-- 5 cases × 40 worlds = **200 independent simulated world-condition trajectories**. Seven estimator arms analyze the **same** trajectories. Thus the result count is not 1,400 independent worlds.
+- 5 cases × 40 seeded evaluations = **200 condition-specific simulated trajectories**. The same 20 remote and 20 null seed numbers are intentionally reused across physical conditions to make **paired comparisons**. Seven estimator arms analyze each same trajectory. Therefore these are not 1,400 independent worlds, and comparisons between conditions are not independent samples.
 - Additional exact operator identities and sensor-basis matrices are numerical proof certificates, not new stochastic world trials.
 
 **Outcomes:** exact remote address recovery when physical H contains a remote link, correct refusal when H is local-only, false physical remote link attribution, mean absolute local coefficient error, whether the sham independently sees the bypass, and all failures. The judge sees truth only for scoring.
