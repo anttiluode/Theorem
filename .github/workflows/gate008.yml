@@ -1,0 +1,37 @@
+name: Theorem Gate 008 - Nonlinear Allen-Cahn equilibrium-breaking pulses
+
+on:
+  push:
+    paths:
+      - 'equilibrium_gate.py'
+      - 'tests/test_equilibrium_gate.py'
+      - '.github/workflows/gate008.yml'
+  workflow_dispatch:
+
+jobs:
+  nonlinear-equilibrium:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install numpy pytest
+      - name: All nonlinear and physical-source falsification tests
+        run: python -m pytest -q
+      - name: Separate development-only smoke run
+        run: python -m equilibrium_gate --quick --out results/smoke008
+      - name: Untouched frozen 40-seed six-world evaluation
+        run: python -m equilibrium_gate --out results
+      - name: Archive full per-seed receipts and failures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: theorem-gate008-nonlinear-equilibrium-results
+          path: |
+            results/gate008.json
+            results/gate008.md
+            results/smoke008/gate008.json
+            results/smoke008/gate008.md
+          if-no-files-found: warn
