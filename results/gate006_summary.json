@@ -1,0 +1,133 @@
+{
+  "title": "Gate 006: Private-action IV with colored sensors and unknown actuator dynamics",
+  "date": "2026-11-22",
+  "status": "success",
+  "experimental_type": "synthetic causal boundary stress test",
+  "repo": "https://github.com/anttiluode/Theorem",
+  "workflow": "https://github.com/anttiluode/Theorem/actions/runs/45044598034",
+  "artifact": "https://github.com/anttiluode/Theorem/actions/runs/45044598034/artifacts/14762208996",
+  "report": "https://github.com/anttiluode/Theorem/blob/main/GATE_006_REPORT.md",
+  "tests_passed": 49,
+  "remote_seeds": "4501-4540",
+  "null_seeds": "5501-5540",
+  "n_unique_trajectories": 640,
+  "n_alternative_lag_reanalyses": 80,
+  "known_family": "64x64 spatially shift-invariant sparse linear state dynamics, exactly logged command port assumed ideal by estimator, full-field sensors",
+  "unknown_to_estimator": "actual local coefficients, remote strength/sign/address, sensor R, actuator gain/shift/delay/noise",
+  "action_l2_norm": 0.45,
+  "passive_steps": 16,
+  "active_steps": 48,
+  "sensor_sd_hidden_range": [
+    0.012,
+    0.022
+  ],
+  "remote_coefficient_abs_range": [
+    0.045,
+    0.075
+  ],
+  "selection": "Frozen Gate005 first/second 24-action kernel estimates, 3.4x spatial MAD and same sign; exploratory, not FWER controlled",
+  "conditions": [
+    {
+      "condition": "iid",
+      "alignment_lag": 0,
+      "correct_remote": 40,
+      "remote_worlds": 40,
+      "correct_no_link": 40,
+      "no_link_worlds": 40,
+      "false_links_in_null": 0,
+      "local_coefficient_mae": 0.0046
+    },
+    {
+      "condition": "temporal_ar085",
+      "alignment_lag": 0,
+      "correct_remote": 39,
+      "remote_worlds": 40,
+      "correct_no_link": 40,
+      "no_link_worlds": 40,
+      "false_links_in_null": 0,
+      "local_coefficient_mae": 0.0046
+    },
+    {
+      "condition": "spatial_colored",
+      "alignment_lag": 0,
+      "correct_remote": 40,
+      "remote_worlds": 40,
+      "correct_no_link": 40,
+      "no_link_worlds": 40,
+      "false_links_in_null": 0,
+      "local_coefficient_mae": 0.0046
+    },
+    {
+      "condition": "temporal_spatial_colored",
+      "alignment_lag": 0,
+      "correct_remote": 39,
+      "remote_worlds": 40,
+      "correct_no_link": 40,
+      "no_link_worlds": 40,
+      "false_links_in_null": 0,
+      "local_coefficient_mae": 0.0047
+    },
+    {
+      "condition": "independent_actuator_noise",
+      "alignment_lag": 0,
+      "correct_remote": 40,
+      "remote_worlds": 40,
+      "correct_no_link": 40,
+      "no_link_worlds": 40,
+      "false_links_in_null": 0,
+      "local_coefficient_mae": 0.0046
+    },
+    {
+      "condition": "unknown_gain",
+      "alignment_lag": 0,
+      "correct_remote": 15,
+      "remote_worlds": 40,
+      "correct_no_link": 40,
+      "no_link_worlds": 40,
+      "false_links_in_null": 0,
+      "local_coefficient_mae": 0.0672
+    },
+    {
+      "condition": "shifted_actuator",
+      "alignment_lag": 0,
+      "correct_remote": 0,
+      "remote_worlds": 40,
+      "correct_no_link": 0,
+      "no_link_worlds": 40,
+      "false_links_in_null": 40,
+      "local_coefficient_mae": 0.149
+    },
+    {
+      "condition": "delayed_actuator",
+      "alignment_lag": 0,
+      "correct_remote": 0,
+      "remote_worlds": 40,
+      "correct_no_link": 40,
+      "no_link_worlds": 40,
+      "false_links_in_null": 0,
+      "local_coefficient_mae": 0.149
+    },
+    {
+      "condition": "delayed_actuator",
+      "alignment_lag": 1,
+      "correct_remote": 40,
+      "remote_worlds": 40,
+      "correct_no_link": 40,
+      "no_link_worlds": 40,
+      "false_links_in_null": 0,
+      "local_coefficient_mae": 0.0046
+    }
+  ],
+  "physical_finding": "Unknown spatial actuator shift (+5,+7) creates apparent remotely shifted command-response kernel even in a physical world with no remote link. Active IV recovers H*G, not H alone.",
+  "sensor_caveat": "Exogenous fresh private sign can remain orthogonal to temporally and spatially correlated sensor noise. Finite sample variance may change; this is not a universal robustness guarantee.",
+  "timing_caveat": "Correct lag=1 is externally supplied, not blind estimated. The same delayed trajectories are reused for lag=0 and lag=1 comparisons.",
+  "limits": [
+    "Synthetic single optional remote link",
+    "All fields fully observed with periodic convolution",
+    "Spatial MAD threshold is exploratory and not a calibrated p-value",
+    "Actuator G and world H cannot be separately factored from only action-response moment",
+    "A second independent sensor/actuator path or calibration could restore physical attribution",
+    "No interpretation of EEG sensor origin is uniquely implied"
+  ],
+  "new_next_gate": "Add action-dependent sensor feedthrough y_next=H*(x+G*u)+C*u+noise; separate internal H vs port G vs direct sensor C only with extra calibration."
+}
