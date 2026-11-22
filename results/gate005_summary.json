@@ -1,0 +1,206 @@
+{
+  "experiment": "Theorem Gate 005 — Active private-sign IV with hidden local weights, remote sign and unknown sensor variance",
+  "date": "2026-11-22",
+  "workflow": "https://github.com/anttiluode/Theorem/actions/runs/45043279743",
+  "artifact": "https://github.com/anttiluode/Theorem/actions/runs/45043279743/artifacts/14762816341",
+  "protocol": "https://github.com/anttiluode/Theorem/blob/main/GATE_005_PROTOCOL.md",
+  "report": "https://github.com/anttiluode/Theorem/blob/main/GATE_005_REPORT.md",
+  "tests_passed": 40,
+  "model_known": "Linear spatially shift-invariant circular convolution, known additive actuation port, sparse kernel, local support radius <=3, independent private action sign",
+  "model_hidden": "All actual local stencil coefficients, remote address/strength/sign, remote presence and per-world sensor noise SD",
+  "estimator": "Fourier cross-spectral moment of independently randomized actual action with next observed output; half-split candidate discovery and sign confirmation; 3.4 robust spatial MAD thresholds, heuristic not formal FWER",
+  "development_seeds": "701–708",
+  "regimes": [
+    {
+      "regime": "easy previously inspected",
+      "n_worlds_remote": 20,
+      "n_worlds_no_link": 20,
+      "results": [
+        {
+          "policy": "white",
+          "exact_remote_addresses": 20,
+          "correct_no_link": 20,
+          "false_link_count": 0,
+          "mean_local_kernel_mae": 0.00252,
+          "correct_remote_after_actions": {
+            "12": 20,
+            "16": 20,
+            "24": 20,
+            "32": 20,
+            "48": 20
+          }
+        },
+        {
+          "policy": "two_phase",
+          "exact_remote_addresses": 20,
+          "correct_no_link": 20,
+          "false_link_count": 0,
+          "mean_local_kernel_mae": 0.00279,
+          "correct_remote_after_actions": {
+            "12": 20,
+            "16": 20,
+            "24": 20,
+            "32": 20,
+            "48": 20
+          }
+        },
+        {
+          "policy": "fourier_only",
+          "exact_remote_addresses": 0,
+          "correct_no_link": 18,
+          "false_link_count": 2,
+          "mean_local_kernel_mae": 0.14247,
+          "correct_remote_after_actions": {
+            "12": 0,
+            "16": 0,
+            "24": 0,
+            "32": 0,
+            "48": 0
+          }
+        },
+        {
+          "policy": "feedback",
+          "exact_remote_addresses": 20,
+          "correct_no_link": 20,
+          "false_link_count": 0,
+          "mean_local_kernel_mae": 0.04619,
+          "correct_remote_after_actions": {
+            "12": 20,
+            "16": 20,
+            "24": 20,
+            "32": 20,
+            "48": 20
+          }
+        },
+        {
+          "policy": "placebo",
+          "exact_remote_addresses": 0,
+          "correct_no_link": 20,
+          "false_link_count": 0,
+          "mean_local_kernel_mae": 0.14826,
+          "correct_remote_after_actions": {
+            "12": 0,
+            "16": 0,
+            "24": 0,
+            "32": 0,
+            "48": 0
+          }
+        }
+      ]
+    },
+    {
+      "regime": "weak independent frozen holdout",
+      "n_worlds_remote": 40,
+      "n_worlds_no_link": 40,
+      "results": [
+        {
+          "policy": "white",
+          "exact_remote_addresses": 40,
+          "correct_no_link": 40,
+          "false_link_count": 0,
+          "mean_local_kernel_mae": 0.00622,
+          "correct_remote_after_actions": {
+            "12": 10,
+            "16": 19,
+            "24": 28,
+            "32": 36,
+            "48": 40
+          }
+        },
+        {
+          "policy": "two_phase",
+          "exact_remote_addresses": 36,
+          "correct_no_link": 40,
+          "false_link_count": 0,
+          "mean_local_kernel_mae": 0.00667,
+          "correct_remote_after_actions": {
+            "12": 13,
+            "16": 22,
+            "24": 28,
+            "32": 33,
+            "48": 36
+          }
+        },
+        {
+          "policy": "fourier_only",
+          "exact_remote_addresses": 0,
+          "correct_no_link": 40,
+          "false_link_count": 0,
+          "mean_local_kernel_mae": 0.14214,
+          "correct_remote_after_actions": {
+            "12": 0,
+            "16": 0,
+            "24": 0,
+            "32": 0,
+            "48": 0
+          }
+        },
+        {
+          "policy": "feedback",
+          "exact_remote_addresses": 33,
+          "correct_no_link": 40,
+          "false_link_count": 0,
+          "mean_local_kernel_mae": 0.03098,
+          "correct_remote_after_actions": {
+            "12": 2,
+            "16": 12,
+            "24": 21,
+            "32": 27,
+            "48": 33
+          }
+        },
+        {
+          "policy": "placebo",
+          "exact_remote_addresses": 0,
+          "correct_no_link": 40,
+          "false_link_count": 0,
+          "mean_local_kernel_mae": 0.14802,
+          "correct_remote_after_actions": {
+            "12": 0,
+            "16": 0,
+            "24": 0,
+            "32": 0,
+            "48": 0
+          }
+        }
+      ]
+    }
+  ],
+  "weak_regime": {
+    "random_remote_seeds": "2201–2240",
+    "random_no_link_seeds": "3201–3240",
+    "sensor_sd_hidden_range": [
+      0.012,
+      0.022
+    ],
+    "remote_coefficient_abs_range": [
+      0.045,
+      0.075
+    ],
+    "input_l2": 0.45,
+    "passive_steps": 16,
+    "active_steps": 48
+  },
+  "easy_regime": {
+    "remote_seeds": "2101–2120",
+    "null_seeds": "3101–3120",
+    "sensor_sd_hidden_range": [
+      0.006,
+      0.014
+    ],
+    "remote_coefficient_abs_range": [
+      0.065,
+      0.11
+    ],
+    "input_l2": 0.7
+  },
+  "positive": "White independent actions recovered unknown weak remote link 40/40 and rejected unknown-R null 40/40; remote mispaired placebo 0/40. Local coefficient estimates also accurate.",
+  "negative": "Two-phase adaptive 36/40 at final vs white 40/40. Adaptive Fourier narrowly leads at 12/16 interventions but no sustained advantage; deterministic feedback local-coefficient estimates worse than private white.",
+  "not_proven": [
+    "No formal FWER/p-value due heuristic MAD",
+    "IV only under action exogeneity and known additive actuation model",
+    "No variogram-based R estimation",
+    "No nonlinear, multi-lag, colored-noise or multi-link identification",
+    "No general theorem or natural-data causal conclusions"
+  ]
+}
